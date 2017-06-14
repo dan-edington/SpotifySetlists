@@ -1,14 +1,28 @@
 const initialState = {
-  artistName: ''
+  searchValue: '',
+  artistName: '',
+  setLists: []
 };
 
 const appState = (state = initialState, action) => {
 
   switch(action.type) {
 
+    case "SEARCH_BAR_UPDATE":
+
+      return {
+        ...state,
+        searchValue: action.payload
+      }
+      break;
+
     case "ARTIST_SEARCH_SUCCESS":
 
-      return action.payload;
+      return {
+        ...state,
+        artistName: action.payload.artistName,
+        setLists: action.payload.setLists
+      }
       break;
 
   }
