@@ -36,11 +36,15 @@ const extractSetLists = (setListData, artistName) => {
         if(set.sets.set[0].song.length && set.sets.set[1].song.length){
 
           set.sets.set[0].song.forEach((song, j) => {
-            mainSet.push(song['@name']);
+            if(song['@name'] !== "") {
+              mainSet.push(song['@name']);
+            }
           });
 
           set.sets.set[1].song.forEach((song, j) => {
-            encoreSet.push(song['@name']);
+            if(song['@name'] !== "") {
+              encoreSet.push(song['@name']);
+            }
           });
 
         }
@@ -51,7 +55,9 @@ const extractSetLists = (setListData, artistName) => {
         if(set.sets.set.song.length){
 
           set.sets.set.song.forEach((song, j) => {
-            mainSet.push(song['@name']);
+            if(song['@name'] !== "") {
+              mainSet.push(song['@name']);
+            }
           });
 
         }
@@ -93,7 +99,7 @@ export const artistSearch = (artistName) => {
 
       const responseData = response.data;
       let artistSearchResponse = extractSetLists(responseData, responseData.setlists.setlist[0].artist['@name']);
-      
+      console.log(responseData);
       dispatch(artistSearchSuccess(artistSearchResponse));
 
     })
