@@ -1,19 +1,5 @@
 import axios from 'axios';
 
-export const artistSearchSuccess = (artistSearchData) => {
-  return {
-    type: "ARTIST_SEARCH_SUCCESS",
-    payload: artistSearchData
-  }
-}
-
-export const searchBarUpdate = (searchValue) => {
-  return {
-    type: "SEARCH_BAR_UPDATE",
-    payload: searchValue
-  }
-}
-
 const extractSetLists = (setListData, artistName) => {
 
   let extractedSetLists = {};
@@ -92,14 +78,13 @@ export const artistSearch = (artistName) => {
       method: 'post',
       url: '//localhost:3001/searchSetlists',
       data: {
-        artistName: artistName
+        artistName
       }
     })
     .then((response)=>{
 
       const responseData = response.data;
       let artistSearchResponse = extractSetLists(responseData, responseData.setlists.setlist[0].artist['@name']);
-      console.log(responseData);
       dispatch(artistSearchSuccess(artistSearchResponse));
 
     })
@@ -109,4 +94,25 @@ export const artistSearch = (artistName) => {
 
   }
 
+}
+
+export const artistSearchSuccess = (artistSearchData) => {
+  return {
+    type: "ARTIST_SEARCH_SUCCESS",
+    payload: artistSearchData
+  }
+}
+
+export const searchBarUpdate = (searchValue) => {
+  return {
+    type: "SEARCH_BAR_UPDATE",
+    payload: searchValue
+  }
+}
+
+export const setLoginStatus = (loginStatus) => {
+  return {
+    type: "SET_LOGIN_STATUS",
+    payload: { loginStatus }
+  }
 }
