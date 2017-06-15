@@ -23,7 +23,7 @@ class App extends Component {
           grant: 'https://accounts.spotify.com/api/token'
         },
         refresh: true,
-        base: 'https://api.spotify.com'
+        base: 'https://api.spotify.com/'
       }
     });
 
@@ -32,9 +32,21 @@ class App extends Component {
       { redirect_uri: SpotifyCredentials.callbackURL }
     );
 
-    let spotifyAuthResponse = hello('spotify').getAuthResponse();
+    hello('spotify').on('auth.login', () => {
+      this.props.setLoginStatus(this.getLoggedInStatus());
+    });
 
-    this.props.setLoginStatus(this.loggedIntoSpotify(spotifyAuthResponse));
+    let spotifyAuthResponse = hello('spotify').getAuthResponse();
+    let loggedInStatus = this.loggedIntoSpotify(spotifyAuthResponse);
+
+    this.props.setLoginStatus(this.getLoggedInStatus());
+
+  }
+
+  getLoggedInStatus() {
+
+    let spotifyAuthResponse = hello('spotify').getAuthResponse();
+    return this.loggedIntoSpotify(spotifyAuthResponse);
 
   }
 
@@ -57,7 +69,7 @@ class App extends Component {
         <header>Spotify Setlists</header>
         {
           this.props.loggedIntoSpotify ?
-            '' : <button onClick={ this.handleLoginClick }>Log in with Spotify</button> 
+            '' : <button onClick={ this.handleLoginClick }>Log in with Spotify</button>
         }
         <SearchBar />
         <SearchResults />

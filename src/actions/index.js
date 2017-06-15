@@ -23,13 +23,19 @@ const extractSetLists = (setListData, artistName) => {
 
           set.sets.set[0].song.forEach((song, j) => {
             if(song['@name'] !== "") {
-              mainSet.push(song['@name']);
+              mainSet.push({
+                songName: song['@name'],
+                spotifyURI: false
+              });
             }
           });
 
           set.sets.set[1].song.forEach((song, j) => {
             if(song['@name'] !== "") {
-              encoreSet.push(song['@name']);
+              encoreSet.push({
+                songName: song['@name'],
+                spotifyURI: false
+              });
             }
           });
 
@@ -42,7 +48,10 @@ const extractSetLists = (setListData, artistName) => {
 
           set.sets.set.song.forEach((song, j) => {
             if(song['@name'] !== "") {
-              mainSet.push(song['@name']);
+              mainSet.push({
+                songName: song['@name'],
+                spotifyURI: false
+              });
             }
           });
 
@@ -113,6 +122,20 @@ export const searchBarUpdate = (searchValue) => {
 export const setLoginStatus = (loginStatus) => {
   return {
     type: "SET_LOGIN_STATUS",
-    payload: { loginStatus }
+    payload: loginStatus
+  }
+}
+
+export const setSpotifyURI = (URIData) => {
+  return {
+    type: "SET_SPOTIFY_URI",
+    payload: URIData
+  }
+}
+
+export const setPlayerState = (playerState) => {
+  return {
+    type: "SET_PLAYER_STATE",
+    payload: playerState
   }
 }

@@ -8,7 +8,7 @@ class SearchResults extends Component {
     render() {
 
       let setLists = this.props.setLists.map((set, i) => {
-        return <SetList artistName={this.props.artistName} setData={set} key={i} />
+        return <SetList key={i} setListID={i} />
       });
 
       return (
