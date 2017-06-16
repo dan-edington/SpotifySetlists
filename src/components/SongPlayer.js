@@ -12,7 +12,7 @@ class SongPlayer extends Component {
       <iframe
         src={ spotifyFullURI }
         width="300"
-        height="380"
+        height="100"
         frameBorder="0"
         allowTransparency="true">
       </iframe>

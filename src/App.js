@@ -9,10 +9,7 @@ import hello from 'hellojs';
 
 class App extends Component {
 
-  constructor(props) {
-    super(props);
-
-    this.handleLoginClick.bind(this);
+  componentWillMount() {
 
     hello.init({
       spotify: {
@@ -32,13 +29,6 @@ class App extends Component {
       { redirect_uri: SpotifyCredentials.callbackURL }
     );
 
-    hello('spotify').on('auth.login', () => {
-      this.props.setLoginStatus(this.getLoggedInStatus());
-    });
-
-    let spotifyAuthResponse = hello('spotify').getAuthResponse();
-    let loggedInStatus = this.loggedIntoSpotify(spotifyAuthResponse);
-
     this.props.setLoginStatus(this.getLoggedInStatus());
 
   }
@@ -51,28 +41,56 @@ class App extends Component {
   }
 
   loggedIntoSpotify(session) {
+
     let currentTime = (new Date()).getTime() / 1000;
 	  return session && session.access_token && session.expires > currentTime;
+
   }
 
-  handleLoginClick(e) {
+  handleLoginClick() {
 
-    hello('spotify').login().then((response)=>{
-      setLoginStatus(this.loggedIntoSpotify(response.authResponse));
-    })
+    hello.login(
+      'spotify',
+      {
+        scope: 'playlist-modify-private'
+      },
+      () => {
+        this.props.setLoginStatus(this.getLoggedInStatus());
+      }
+    );
+
+  }
+
+  handleLogoutClick() {
+
+    hello.logout(
+      'spotify',
+      {
+        force: true
+      },
+      () => {
+        this.props.setLoginStatus(this.getLoggedInStatus());
+      }
+    );
 
   }
 
   render() {
     return (
-      <div>
-        <header>Spotify Setlists</header>
+      <div className="container">
+        <header>
+          <h1 className="col-sm-10">Spotify Setlists</h1>
+          <hr />
+        </header>
         {
           this.props.loggedIntoSpotify ?
-            '' : <button onClick={ this.handleLoginClick }>Log in with Spotify</button>
+            <div>
+              <button className="btn btn-danger col-sm-2" onClick={ this.handleLogoutClick.bind(this) }>Log out of Spotify</button>
+              <SearchBar />
+              <SearchResults />
+            </div> :
+            <button className="btn btn-success col-sm-2" onClick={ this.handleLoginClick.bind(this) }>Log in with Spotify</button>
         }
-        <SearchBar />
-        <SearchResults />
       </div>
     );
   }

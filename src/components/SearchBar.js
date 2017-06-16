@@ -29,14 +29,20 @@ class SearchBar extends Component {
 
     render() {
       return (
-        <div>
-          <form onSubmit={this.handleSubmit}>
-            <input
-              type="text"
-              onChange={this.handleChange}
-              value={this.props.searchValue}
-            />
-            <input type="submit" value="Submit" />
+        <div className="col-sm-12">
+          <form className="form-horizontal" onSubmit={this.handleSubmit}>
+            <div className="form-group">
+                <div className="col-sm-10">
+                <input
+                  name="searchBarInput"
+                  type="text"
+                  onChange={this.handleChange}
+                  value={this.props.searchValue}
+                  className="form-control"
+                />
+              </div>
+              <input type="submit" value="Submit" className="btn btn-success col-sm-2" />
+            </div>
           </form>
         </div>
       );
