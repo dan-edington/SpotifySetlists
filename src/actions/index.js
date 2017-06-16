@@ -139,3 +139,10 @@ export const setPlayerState = (playerState) => {
     payload: playerState
   }
 }
+
+export const setUserID = (userID) => {
+  return {
+    type: "SET_USER_ID",
+    payload: userID
+  }
+}

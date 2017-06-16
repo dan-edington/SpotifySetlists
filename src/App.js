@@ -4,7 +4,7 @@ import { bindActionCreators } from 'redux';
 import SearchBar from './components/SearchBar';
 import SearchResults from './components/SearchResults';
 import SpotifyCredentials from './config/SpotifyCredentials';
-import { setLoginStatus } from './actions';
+import { setLoginStatus, setUserID } from './actions';
 import hello from 'hellojs';
 
 class App extends Component {
@@ -30,6 +30,7 @@ class App extends Component {
     );
 
     this.props.setLoginStatus(this.getLoggedInStatus());
+    this.setUserID();
 
   }
 
@@ -37,6 +38,17 @@ class App extends Component {
 
     let spotifyAuthResponse = hello('spotify').getAuthResponse();
     return this.loggedIntoSpotify(spotifyAuthResponse);
+
+  }
+
+  setUserID() {
+
+    hello('spotify').api({
+      path: '/v1/me',
+      method: 'get'
+    }).then((response)=>{
+      this.props.setUserID(response.id);
+    });
 
   }
 
@@ -56,6 +68,7 @@ class App extends Component {
       },
       () => {
         this.props.setLoginStatus(this.getLoggedInStatus());
+        this.setUserID();
       }
     );
 
@@ -70,6 +83,7 @@ class App extends Component {
       },
       () => {
         this.props.setLoginStatus(this.getLoggedInStatus());
+        this.setUserID();
       }
     );
 
@@ -78,18 +92,22 @@ class App extends Component {
   render() {
     return (
       <div className="container">
-        <header>
+        <header className="clearfix">
           <h1 className="col-sm-10">Spotify Setlists</h1>
-          <hr />
+          {
+            this.props.loggedIntoSpotify ?
+              <button className="btn btn-danger col-sm-2" onClick={ this.handleLogoutClick.bind(this) }>Log out of Spotify</button>
+              :
+              <button className="btn btn-success col-sm-2" onClick={ this.handleLoginClick.bind(this) }>Log in with Spotify</button>
+          }
         </header>
         {
           this.props.loggedIntoSpotify ?
             <div>
-              <button className="btn btn-danger col-sm-2" onClick={ this.handleLogoutClick.bind(this) }>Log out of Spotify</button>
               <SearchBar />
               <SearchResults />
-            </div> :
-            <button className="btn btn-success col-sm-2" onClick={ this.handleLoginClick.bind(this) }>Log in with Spotify</button>
+            </div> : ''
+
         }
       </div>
     );
@@ -105,7 +123,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
 	return bindActionCreators({
-		setLoginStatus
+		setLoginStatus,
+    setUserID
 	}, dispatch);
 }
 

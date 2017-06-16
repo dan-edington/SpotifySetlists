@@ -30,6 +30,7 @@ class SearchBar extends Component {
     render() {
       return (
         <div className="col-sm-12">
+          <hr />
           <form className="form-horizontal" onSubmit={this.handleSubmit}>
             <div className="form-group">
                 <div className="col-sm-10">
@@ -44,6 +45,7 @@ class SearchBar extends Component {
               <input type="submit" value="Submit" className="btn btn-success col-sm-2" />
             </div>
           </form>
+          <hr />
         </div>
       );
     }

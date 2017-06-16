@@ -1,5 +1,6 @@
 const initialState = {
-  loggedIntoSpotify: false
+  loggedIntoSpotify: false,
+  userID: null
 };
 
 const authState = (state = initialState, action) => {
@@ -11,6 +12,14 @@ const authState = (state = initialState, action) => {
       return {
         ...state,
         loggedIntoSpotify: action.payload
+      }
+      break;
+
+    case "SET_USER_ID":
+
+      return {
+        ...state,
+        userID: action.payload
       }
       break;
 
