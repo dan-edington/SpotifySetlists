@@ -59,17 +59,6 @@ class SetList extends Component {
 
   render() {
 
-    let styles = {
-      'setList-panel': {
-        'padding': '20px',
-        'marginBottom': '20px'
-      },
-      'divider': {
-        'border': '0',
-        'height': '1px'
-      }
-    }
-
     let setListData = this.props.setLists[this.props.setListID];
 
     let mainSongList = setListData.songLists.main.map((song, i) => {
@@ -85,21 +74,23 @@ class SetList extends Component {
     });
 
     return(
-      <div className="bg-info clearfix" style={styles['setList-panel']}>
-        <header>
+      <div className="panel panel-default">
+        <header className="panel-heading">
           <h2>
             { this.props.artistName } @ { setListData.venue.name }, { setListData.venue.city } ({ setListData.date })
           </h2>
-          <p>
+          <h4>
             { (setListData.songLists.main.length + setListData.songLists.encore.length) } songs
             { setListData.songLists.encore.length ? ', encore' : '' }
-          </p>
+          </h4>
         </header>
-        <hr className="bg-primary" style={styles['divider']} />
-        { mainSongList }
-        { setListData.songLists.encore.length ? <hr className="bg-primary" style={styles['divider']} /> : ''}
-        { encoreSongList }
-        <button onClick={ this.handleSavePlaylistClick.bind(this) } className="btn btn-primary">Save as playlist</button>
+        <div className="panel-body">
+          { mainSongList }
+          { setListData.songLists.encore.length ? <hr /> : ''}
+          { encoreSongList }
+          <hr />
+          <button onClick={ this.handleSavePlaylistClick.bind(this) } className="btn btn-primary">Save as playlist</button>
+        </div>
       </div>
     )
   }

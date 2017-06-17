@@ -52,12 +52,12 @@ const appState = (state = initialState, action) => {
     case "SET_SPOTIFY_URI":
 
       let p = action.payload;
-      let newSetLists = state.setLists;
+      let newSetLists = Object.assign([], state.setLists); // create dupe of array to prevent mutability
       newSetLists[p.setListID]
-        .songLists
+        ['songLists']
         [p.isEncore?'encore':'main']
         [p.songID]
-        .spotifyURI = p.spotifyURI;
+        ['spotifyURI'] = p.spotifyURI;
 
       return {
         ...state,
@@ -67,7 +67,6 @@ const appState = (state = initialState, action) => {
       break;
 
       case "SET_PLAYER_STATE":
-      //console.log(action.payload);
         return {
           ...state,
           playerState: action.payload

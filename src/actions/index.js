@@ -1,4 +1,5 @@
 import axios from 'axios';
+import hello from 'hellojs';
 
 const extractSetLists = (setListData, artistName) => {
 
@@ -59,17 +60,21 @@ const extractSetLists = (setListData, artistName) => {
 
       }
 
-      extractedSetLists.setLists.push({
-        venue: {
-          name: set.venue['@name'],
-          city: set.venue.city['@name']
-        },
-        date: set['@eventDate'],
-        songLists: {
-          main: mainSet,
-          encore: encoreSet
-        }
-      });
+      if(mainSet.length >= 2) {
+
+        extractedSetLists.setLists.push({
+          venue: {
+            name: set.venue['@name'],
+            city: set.venue.city['@name']
+          },
+          date: set['@eventDate'],
+          songLists: {
+            main: mainSet,
+            encore: encoreSet
+          }
+        });
+
+      }
 
     }
 
@@ -99,6 +104,33 @@ export const artistSearch = (artistName) => {
     })
     .catch((error)=>{
       console.log(error);
+    });
+
+  }
+
+}
+
+export const getSpotifyURI = (songData) => {
+
+  return (dispatch) => {
+
+    hello('spotify').api({
+      path: '/v1/search',
+      method: 'get',
+      data: {
+        q: `artist:${songData.artistName} track:${songData.songName}`,
+        type: 'track',
+        limit: 1
+      }
+    }).then((response)=>{
+
+      dispatch(setSpotifyURI({
+        spotifyURI: response.tracks.items.length ? response.tracks.items[0].uri : false,
+        isEncore: songData.isEncore,
+        setListID: songData.setListID,
+        songID: songData.songID
+      }));
+
     });
 
   }

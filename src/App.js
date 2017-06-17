@@ -92,8 +92,8 @@ class App extends Component {
   render() {
     return (
       <div className="container">
-        <header className="clearfix">
-          <h1 className="col-sm-10">Spotify Setlists</h1>
+        <header className="page-header clearfix">
+          <h1>Spotify Setlists</h1>
           {
             this.props.loggedIntoSpotify ?
               <button className="btn btn-danger col-sm-2" onClick={ this.handleLogoutClick.bind(this) }>Log out of Spotify</button>
@@ -103,7 +103,7 @@ class App extends Component {
         </header>
         {
           this.props.loggedIntoSpotify ?
-            <div>
+            <div className="row">
               <SearchBar />
               <SearchResults />
             </div> : ''

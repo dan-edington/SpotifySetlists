@@ -20,7 +20,10 @@ npm run build
 
 ### TODO
 
-- Limit intial setlist.fm search
-- Filter out concerts with 0 songs
-
-...and lots more
+- Don't display results until all data loaded
+- Reset data model on search to ensure app reflects state
+- Error handling
+- Collapsable results
+- Improve player preview
+- Styling
+- Add option of adding non-artist songs (covers etc. - ie. Run The Jewels open with Queen - We Are The Champions)

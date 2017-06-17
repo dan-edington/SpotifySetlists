@@ -1,40 +1,11 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { setSpotifyURI, setPlayerState } from '../actions';
+import { getSpotifyURI, setPlayerState } from '../actions';
 import hello from 'hellojs';
 import SongPlayer from './SongPlayer';
 
 class SetListSong extends Component {
-
-  constructor(props) {
-
-    super(props);
-
-  }
-
-  getSpotifyURI() {
-
-      hello('spotify').api({
-        path: '/v1/search',
-        method: 'get',
-        data: {
-          q: `artist:${this.props.artistName} track:${this.getSongData('songName')}`,
-          type: 'track',
-          limit: 1
-        }
-      }).then((response)=>{
-
-        this.props.setSpotifyURI({
-          spotifyURI: response.tracks.items[0].uri,
-          isEncore: this.props.isEncore,
-          setListID: this.props.setListID,
-          songID: this.props.songID
-        });
-
-      });
-
-  }
 
   getSongData(key) {
 
@@ -47,6 +18,18 @@ class SetListSong extends Component {
 
   }
 
+  getSpotifyURI() {
+
+    this.props.getSpotifyURI({
+      artistName: this.props.artistName,
+      songName: this.getSongData('songName'),
+      isEncore: this.props.isEncore,
+      setListID: this.props.setListID,
+      songID: this.props.songID
+    });
+
+  }
+
   componentWillMount() {
 
     if(!this.getSongData('spotifyURI')) {
@@ -55,7 +38,7 @@ class SetListSong extends Component {
 
   }
 
-  handleClick() {
+  handleSongClick() {
 
     this.togglePlayer();
 
@@ -84,14 +67,28 @@ class SetListSong extends Component {
 
   render() {
 
+    let styles = {
+      'greyedOut': {
+        'color': '#b1b1b1'
+      }
+    }
+
     return(
       <div>
-        <p onClick={this.handleClick.bind(this)}>{ this.getSongData('songName') }</p>
+        {
+          this.getSongData('spotifyURI') === false ?
+            <p style={styles.greyedOut}>{ this.getSongData('songName') } (Unavailable)</p> :
+            <p onClick={this.handleSongClick.bind(this)}>{ this.getSongData('songName') }</p>
+        }
+
+
         {
           this.props.playerState &&
           this.props.playerState.setListID === this.props.setListID &&
           this.props.playerState.songID === this.props.songID
-          ? <SongPlayer spotifyURI={ this.getSongData('spotifyURI') } /> : '' }
+          ? <SongPlayer spotifyURI={ this.getSongData('spotifyURI') } /> : ''
+        }
+
       </div>
     )
 
@@ -101,13 +98,12 @@ class SetListSong extends Component {
 
 const mapDispatchToProps = (dispatch) => {
 	return bindActionCreators({
-    setSpotifyURI,
+    getSpotifyURI,
     setPlayerState
   }, dispatch);
 }
 
 const mapStateToProps = (state) => {
-  //console.log('here');
   return {
     artistName: state.appState.artistName,
     setLists: state.appState.setLists,
