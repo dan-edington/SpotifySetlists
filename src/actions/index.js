@@ -178,3 +178,10 @@ export const setUserID = (userID) => {
     payload: userID
   }
 }
+
+export const resetSearchData = () => {
+  return {
+    type: "RESET_SEARCH_DATA",
+    payload: null
+  }
+}

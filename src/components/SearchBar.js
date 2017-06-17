@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { artistSearch, searchBarUpdate } from '../actions';
+import { artistSearch, searchBarUpdate, resetSearchData } from '../actions';
 
 class SearchBar extends Component {
 
@@ -17,6 +17,7 @@ class SearchBar extends Component {
     handleSubmit(e) {
 
       e.preventDefault();
+      this.props.resetSearchData();
       this.props.artistSearch(this.props.searchValue);
 
     }
@@ -54,7 +55,8 @@ class SearchBar extends Component {
 const mapDispatchToProps = (dispatch) => {
 	return bindActionCreators({
 		artistSearch,
-    searchBarUpdate
+    searchBarUpdate,
+    resetSearchData
 	}, dispatch);
 }
 

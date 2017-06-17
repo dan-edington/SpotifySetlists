@@ -21,7 +21,6 @@ npm run build
 ### TODO
 
 - Don't display results until all data loaded
-- Reset data model on search to ensure app reflects state
 - Error handling
 - Collapsable results
 - Improve player preview
