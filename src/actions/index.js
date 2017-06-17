@@ -1,5 +1,6 @@
 import axios from 'axios';
 import hello from 'hellojs';
+import APIServerCredentials from '../config/APIServerCredentials';
 
 const extractSetLists = (setListData, artistName) => {
 
@@ -90,7 +91,7 @@ export const artistSearch = (artistName) => {
 
     axios({
       method: 'post',
-      url: '//localhost:3001/searchSetlists',
+      url: `//${APIServerCredentials.serverBaseURL}/searchSetlists`,
       data: {
         artistName
       }

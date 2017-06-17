@@ -11,7 +11,6 @@ import AuthCallback from './components/AuthCallback';
 import appState from './reducers/appState';
 import authState from './reducers/authState';
 import registerServiceWorker from './registerServiceWorker';
-import {SpotifyCredentials} from './config/SpotifyCredentials';
 
 const history = createHistory();
 const routerHistoryMiddleware = routerMiddleware(history);

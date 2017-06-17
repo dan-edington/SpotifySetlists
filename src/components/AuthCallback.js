@@ -4,9 +4,7 @@ class AuthCallback extends Component {
 
   render() {
     return(
-      <div>
-        AAA
-      </div>
+      <p>Authorisation callback page</p>
     )
   }
 
