@@ -8,6 +8,7 @@ const extractSetLists = (setListData, artistName) => {
 
   extractedSetLists.artistName = artistName;
   extractedSetLists.setLists = [];
+  extractedSetLists.spotifyURIs = {};
 
   setListData.setlists.setlist.forEach((set, i) => {
 
@@ -26,22 +27,24 @@ const extractSetLists = (setListData, artistName) => {
           set.sets.set[0].song.forEach((song, j) => {
             if(song['@name'] !== "") {
               mainSet.push({
-                songName: song['@name'],
-                spotifyURI: false
+                songName: song['@name']
               });
+              extractedSetLists.spotifyURIs[song['@name']] = null;
             }
           });
 
           set.sets.set[1].song.forEach((song, j) => {
             if(song['@name'] !== "") {
               encoreSet.push({
-                songName: song['@name'],
-                spotifyURI: false
+                songName: song['@name']
               });
+              extractedSetLists.spotifyURIs[song['@name']] = null;
             }
           });
 
         }
+
+
 
       } else {
 
@@ -51,9 +54,9 @@ const extractSetLists = (setListData, artistName) => {
           set.sets.set.song.forEach((song, j) => {
             if(song['@name'] !== "") {
               mainSet.push({
-                songName: song['@name'],
-                spotifyURI: false
+                songName: song['@name']
               });
+              extractedSetLists.spotifyURIs[song['@name']] = null;
             }
           });
 
@@ -99,6 +102,7 @@ export const artistSearch = (artistName) => {
     .then((response)=>{
 
       const responseData = response.data;
+      //console.log(responseData);
       let artistSearchResponse = extractSetLists(responseData, responseData.setlists.setlist[0].artist['@name']);
       dispatch(artistSearchSuccess(artistSearchResponse));
 
@@ -127,9 +131,7 @@ export const getSpotifyURI = (songData) => {
 
       dispatch(setSpotifyURI({
         spotifyURI: response.tracks.items.length ? response.tracks.items[0].uri : false,
-        isEncore: songData.isEncore,
-        setListID: songData.setListID,
-        songID: songData.songID
+        songName: songData.songName
       }));
 
     });

@@ -20,21 +20,22 @@ class SetListSong extends Component {
 
   getSpotifyURI() {
 
-    this.props.getSpotifyURI({
-      artistName: this.props.artistName,
-      songName: this.getSongData('songName'),
-      isEncore: this.props.isEncore,
-      setListID: this.props.setListID,
-      songID: this.props.songID
-    });
+    let songName = this.getSongData('songName');
+
+    if(this.props.spotifyURIs[this.getSongData('songName')] === null) {
+
+      this.props.getSpotifyURI({
+        artistName: this.props.artistName,
+        songName
+      });
+
+    }
 
   }
 
   componentWillMount() {
 
-    if(!this.getSongData('spotifyURI')) {
-      this.getSpotifyURI();
-    }
+    this.getSpotifyURI();
 
   }
 
@@ -76,7 +77,7 @@ class SetListSong extends Component {
     return(
       <div>
         {
-          this.getSongData('spotifyURI') === false ?
+          this.props.spotifyURIs[this.getSongData('songName')] === false ?
             <p style={styles.greyedOut}>{ this.getSongData('songName') } (Unavailable)</p> :
             <p onClick={this.handleSongClick.bind(this)}>{ this.getSongData('songName') }</p>
         }
@@ -86,7 +87,7 @@ class SetListSong extends Component {
           this.props.playerState &&
           this.props.playerState.setListID === this.props.setListID &&
           this.props.playerState.songID === this.props.songID
-          ? <SongPlayer spotifyURI={ this.getSongData('spotifyURI') } /> : ''
+          ? <SongPlayer spotifyURI={ this.props.spotifyURIs[this.getSongData('songName')] } /> : ''
         }
 
       </div>
@@ -107,7 +108,8 @@ const mapStateToProps = (state) => {
   return {
     artistName: state.appState.artistName,
     setLists: state.appState.setLists,
-    playerState: state.appState.playerState
+    playerState: state.appState.playerState,
+    spotifyURIs: state.appState.spotifyURIs
   }
 }
 

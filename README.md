@@ -20,7 +20,7 @@ npm run build
 
 ### TODO
 
-- Add spotify URIs to a single state object that can be referenced to cut down massively on requests to spotify
+- Eliminate duplicate requests to spotify api
 - Don't display results until all data loaded
 - Error handling
 - Collapsable results

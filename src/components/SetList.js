@@ -19,13 +19,8 @@ class SetList extends Component {
       ...setListData.songLists.main,
       ...setListData.songLists.encore
     ].map((song) => {
-      if(song.spotifyURI) {
-        return song.spotifyURI;
-      }
+      return this.props.spotifyURIs[song.songName];
     })
-    .filter((song) => {
-      return song;
-    });
 
     hello('spotify').api({
       path: `/v1/users/${this.props.userID}/playlists`,
@@ -105,7 +100,8 @@ const mapStateToProps = (state) => {
   return {
     artistName: state.appState.artistName,
     setLists: state.appState.setLists,
-    userID: state.authState.userID
+    userID: state.authState.userID,
+    spotifyURIs: state.appState.spotifyURIs
   }
 }
 

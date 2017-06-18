@@ -15,7 +15,6 @@
 //      encore: [
 //        {
 //            songName: ''
-//            spotifyURI: ''
 //        }
 //      ]
 //    }
@@ -25,7 +24,8 @@ const initialState = {
   searchValue: '',
   artistName: '',
   playerState: false,
-  setLists: []
+  setLists: [],
+  spotifyURIs: {}
 };
 
 const appState = (state = initialState, action) => {
@@ -54,23 +54,20 @@ const appState = (state = initialState, action) => {
       return {
         ...state,
         artistName: action.payload.artistName,
-        setLists: action.payload.setLists
+        setLists: action.payload.setLists,
+        spotifyURIs: action.payload.spotifyURIs
       }
       break;
 
     case "SET_SPOTIFY_URI":
 
       let p = action.payload;
-      let newSetLists = Object.assign([], state.setLists); // create dupe of array to prevent mutability
-      newSetLists[p.setListID]
-        ['songLists']
-        [p.isEncore?'encore':'main']
-        [p.songID]
-        ['spotifyURI'] = p.spotifyURI;
+      let newSpotifyURIs = Object.assign({}, state.spotifyURIs); // create dupe of array to prevent mutability
+      newSpotifyURIs[p.songName] = p.spotifyURI;
 
       return {
         ...state,
-        setLists: newSetLists
+        spotifyURIs: newSpotifyURIs
       }
 
       break;
