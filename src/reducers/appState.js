@@ -33,12 +33,7 @@ const appState = (state = initialState, action) => {
   switch(action.type) {
 
     case "RESET_SEARCH_DATA":
-      return {
-        ...state,
-        artistName: '',
-        playerState: false,
-        setLists: []
-      }
+      return initialState
       break;
 
     case "SEARCH_BAR_UPDATE":

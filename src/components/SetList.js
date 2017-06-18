@@ -18,9 +18,13 @@ class SetList extends Component {
     let playListURIs = [
       ...setListData.songLists.main,
       ...setListData.songLists.encore
-    ].map((song) => {
+    ].filter((song) => {
+      if(this.props.spotifyURIs[song.songName]) {
+        return true;
+      }
+    }).map((song) => {
       return this.props.spotifyURIs[song.songName];
-    })
+    });
 
     hello('spotify').api({
       path: `/v1/users/${this.props.userID}/playlists`,
