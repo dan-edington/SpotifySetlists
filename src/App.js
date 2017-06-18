@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import SearchBar from './components/SearchBar';
 import SearchResults from './components/SearchResults';
-import SpotifyCredentials from './config/SpotifyCredentials.dev'; // CHANGE THIS TO .prod FOR BUILD!
+import SpotifyCredentials from './config/SpotifyCredentials';
 import { setLoginStatus, setUserID } from './actions';
 import hello from 'hellojs';
 
