@@ -33,7 +33,7 @@ class SearchBar extends Component {
         <div className="col-sm-12">
           <form className="form-horizontal" onSubmit={this.handleSubmit}>
             <div className="form-group">
-                <div className="col-sm-10">
+                <div className="col-sm-10 pull-left">
                 <input
                   name="searchBarInput"
                   type="text"
@@ -42,7 +42,7 @@ class SearchBar extends Component {
                   className="form-control"
                 />
               </div>
-              <input type="submit" value="Search" className="btn btn-success col-sm-2" />
+              <input type="submit" value="Search" className="btn btn-success col-sm-2 pull-left" />
             </div>
           </form>
           <hr />
