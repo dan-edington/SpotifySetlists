@@ -1,5 +1,5 @@
 const APIServerCredentials = {
-  serverBaseURL: 'localhost:3001'
+  serverBaseURL: 'http://localhost:3001'
 }
 
 export default APIServerCredentials;

@@ -91,7 +91,7 @@ export const artistSearch = (artistName) => {
 
     axios({
       method: 'post',
-      url: `//${APIServerCredentials.serverBaseURL}/searchSetlists`,
+      url: `${APIServerCredentials.serverBaseURL}/searchSetlists`,
       data: {
         artistName
       }

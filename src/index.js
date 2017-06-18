@@ -10,7 +10,7 @@ import App from './App';
 import AuthCallback from './components/AuthCallback';
 import appState from './reducers/appState';
 import authState from './reducers/authState';
-import registerServiceWorker from './registerServiceWorker';
+//import registerServiceWorker from './registerServiceWorker';
 
 const history = createHistory();
 const routerHistoryMiddleware = routerMiddleware(history);
@@ -36,4 +36,4 @@ ReactDOM.render(
   document.getElementById('root')
 );
 
-registerServiceWorker();
+//registerServiceWorker();

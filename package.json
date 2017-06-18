@@ -2,6 +2,7 @@
   "name": "spotifysetlist",
   "version": "0.1.0",
   "private": true,
+  "homepage": "http://www.danedington.com/spotifySetlists/",
   "dependencies": {
     "axios": "^0.16.2",
     "hellojs": "^1.15.0",
