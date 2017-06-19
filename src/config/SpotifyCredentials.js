@@ -1,5 +1,3 @@
-let buildMode = 'development';
-
 const SpotifyCredentials = {
   production: {
     clientID: 'cee894f275734341a6dd69a408adbc70',
@@ -13,10 +11,4 @@ const SpotifyCredentials = {
   }
 }
 
-if(process.env.NODE_ENV === 'production') {
-  buildMode = 'production';
-} else {
-  buildMode = 'development';
-}
-
-export default SpotifyCredentials[buildMode];
+export default SpotifyCredentials[process.env.NODE_ENV];
