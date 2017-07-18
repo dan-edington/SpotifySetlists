@@ -4,7 +4,7 @@ import { bindActionCreators } from 'redux';
 import SetListSong from './SetListSong';
 import hello from 'hellojs';
 
-class SetList extends Component {
+class _SetList extends Component {
 
   handleSavePlaylistClick() {
 
@@ -14,30 +14,30 @@ class SetList extends Component {
 
   createNewPlayList() {
 
-    let setListData = this.props.setLists[this.props.setListID];
-    let playListURIs = [
+    const setListData = this.props.setLists[this.props.setListID];
+    const playListURIs = [
       ...setListData.songLists.main,
-      ...setListData.songLists.encore
-    ].filter((song) => {
-      if(this.props.spotifyURIs[song.songName]) {
-        return true;
-      }
-    }).map((song) => {
-      return this.props.spotifyURIs[song.songName];
-    });
+      ...setListData.songLists.encore,
+    ].filter(song => (
+      this.props.spotifyURIs[song.songName] ? true : false
+    )).map(song => (
+      this.props.spotifyURIs[song.songName]
+    ));
 
     hello('spotify').api({
       path: `/v1/users/${this.props.userID}/playlists`,
       method: 'post',
       data: JSON.stringify({
         name: `${this.props.artistName} @ ${setListData.venue.name}, ${setListData.venue.city} (${setListData.date})`,
-        public: 'false'
-      })
-    }).then((res)=>{
+        public: 'false',
+      }),
+    }).then((res) => {
+
       this.addTracksToPlayList({
         playListURIs,
-        playListID: res.id
+        playListID: res.id,
       });
+
     });
 
   }
@@ -48,35 +48,34 @@ class SetList extends Component {
       path: `/v1/users/${this.props.userID}/playlists/${playlistData.playListID}/tracks`,
       method: 'post',
       data: JSON.stringify({
-        uris: playlistData.playListURIs
-      })
-    }).then(()=>{
-      alert("DONE!");
+        uris: playlistData.playListURIs,
+      }),
+    }).then(() => {
+
+      alert('DONE!');
+
     });
 
   }
 
   render() {
 
-    let setListData = this.props.setLists[this.props.setListID];
+    const setListData = this.props.setLists[this.props.setListID];
 
-    let mainSongList = setListData.songLists.main.map((song, i) => {
-      return(
-        <SetListSong key={i} songID={i} setListID={this.props.setListID} isEncore={false} />
-      )
-    });
+    const mainSongList = setListData.songLists.main.map((song, i) => (
+      <SetListSong key={i} songID={i} setListID={this.props.setListID} isEncore={false} />
+    ));
 
-    let encoreSongList = setListData.songLists.encore.map((song, i) => {
-      return(
-        <SetListSong key={i} songID={i} setListID={this.props.setListID} isEncore={true} />
-      )
-    });
+    const encoreSongList = setListData.songLists.encore.map((song, i) => (
+      <SetListSong key={i} songID={i} setListID={this.props.setListID} isEncore={true} />
+    ));
 
-    return(
+    return (
       <div className="panel panel-default">
         <header className="panel-heading">
           <h2>
-            { this.props.artistName } @ { setListData.venue.name }, { setListData.venue.city } ({ setListData.date })
+            { this.props.artistName } @ { setListData.venue.name },
+            { setListData.venue.city } ({ setListData.date })
           </h2>
           <h4>
             { (setListData.songLists.main.length + setListData.songLists.encore.length) } songs
@@ -88,27 +87,28 @@ class SetList extends Component {
           { setListData.songLists.encore.length ? <hr /> : ''}
           { encoreSongList }
           <hr />
-          <button onClick={ this.handleSavePlaylistClick.bind(this) } className="btn btn-primary">Save as playlist</button>
+          <button
+            onClick={ this.handleSavePlaylistClick.bind(this) } 
+            className="btn btn-primary">Save as playlist</button>
         </div>
       </div>
-    )
+    );
+
   }
 
 }
 
-const mapDispatchToProps = (dispatch) => {
-	return bindActionCreators({}, dispatch);
-}
+const mapDispatchToProps = dispatch => (
+  bindActionCreators({}, dispatch)
+);
 
-const mapStateToProps = (state) => {
-  return {
-    artistName: state.appState.artistName,
-    setLists: state.appState.setLists,
-    userID: state.authState.userID,
-    spotifyURIs: state.appState.spotifyURIs
-  }
-}
+const mapStateToProps = state => ({
+  artistName: state.appState.artistName,
+  setLists: state.appState.setLists,
+  userID: state.authState.userID,
+  spotifyURIs: state.appState.spotifyURIs,
+});
 
-SetList = connect(mapStateToProps, mapDispatchToProps)(SetList);
+const SetList = connect(mapStateToProps, mapDispatchToProps)(_SetList);
 
 export default SetList;

@@ -1,0 +1,23 @@
+{
+    "env": {
+      "browser": true
+    },
+    "extends": "airbnb-base",
+    "plugins": [
+        "import",
+        "react"
+    ],
+    "parserOptions": {
+      "ecmaVersion": 6,
+      "sourceType": "module",
+      "ecmaFeatures": {
+          "jsx": true
+      }
+    },
+    "rules": {
+      "linebreak-style": ["error", "windows"],
+      "padded-blocks": ["error", "always"],
+      "func-names": ["error", "never"],
+      "no-plusplus": ["error", { "allowForLoopAfterthoughts": true }]
+    }
+}

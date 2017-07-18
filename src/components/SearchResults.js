@@ -1,37 +1,35 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import SetList from './SetList';
 
-class SearchResults extends Component {
+class _SearchResults extends Component {
 
-    render() {
+  render() {
 
-      let setLists = this.props.setLists.map((set, i) => {
-        return <SetList key={i} setListID={i} />
-      });
+    const setLists = this.props.setLists.map((set, i) => (
+      <SetList key={i} setListID={i} />
+    ));
 
-      return (
-          <div className="col-sm-12">
-            {setLists}
-          </div>
-      );
+    return (
+      <div className="col-sm-12">
+        {setLists}
+      </div>
+    );
 
-    }
-
-}
-
-const mapDispatchToProps = (dispatch) => {
-	return bindActionCreators({}, dispatch);
-}
-
-const mapStateToProps = (state) => {
-  return {
-    artistName: state.appState.artistName,
-    setLists: state.appState.setLists
   }
+
 }
 
-SearchResults = connect(mapStateToProps, mapDispatchToProps)(SearchResults);
+const mapDispatchToProps = dispatch => (
+  bindActionCreators({}, dispatch)
+);
+
+const mapStateToProps = state => ({
+  artistName: state.appState.artistName,
+  setLists: state.appState.setLists,
+});
+
+const SearchResults = connect(mapStateToProps, mapDispatchToProps)(_SearchResults);
 
 export default SearchResults;

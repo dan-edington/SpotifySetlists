@@ -20,7 +20,7 @@ npm run build
 
 ### TODO
 
-- Fix dodgy login on mobile
+- Fix dodgy login on mobile (needs more testing, appears to be ok right now...problem on Spotify's end?)
 - Eliminate duplicate requests to spotify api
 - Don't display results until all data loaded
 - Error handling

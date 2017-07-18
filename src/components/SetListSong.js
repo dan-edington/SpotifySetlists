@@ -2,17 +2,16 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { getSpotifyURI, setPlayerState } from '../actions';
-import hello from 'hellojs';
 import SongPlayer from './SongPlayer';
 
-class SetListSong extends Component {
+class _SetListSong extends Component {
 
   getSongData(key) {
 
     return this.props.setLists
       [this.props.setListID]
       .songLists
-      [this.props.isEncore?'encore':'main']
+      [this.props.isEncore ? 'encore' : 'main']
       [this.props.songID]
       [key];
 
@@ -20,13 +19,13 @@ class SetListSong extends Component {
 
   getSpotifyURI() {
 
-    let songName = this.getSongData('songName');
+    const songName = this.getSongData('songName');
 
-    if(this.props.spotifyURIs[this.getSongData('songName')] === null) {
+    if (this.props.spotifyURIs[this.getSongData('songName')] === null) {
 
       this.props.getSpotifyURI({
         artistName: this.props.artistName,
-        songName
+        songName,
       });
 
     }
@@ -48,10 +47,9 @@ class SetListSong extends Component {
   togglePlayer() {
 
 
-    if(this.props.playerState &&
+    if (this.props.playerState &&
        this.props.playerState.setListID === this.props.setListID &&
-       this.props.playerState.songID === this.props.songID)
-    {
+       this.props.playerState.songID === this.props.songID) {
 
       this.props.setPlayerState(false);
 
@@ -59,7 +57,7 @@ class SetListSong extends Component {
 
       this.props.setPlayerState({
         setListID: this.props.setListID,
-        songID: this.props.songID
+        songID: this.props.songID,
       });
 
     }
@@ -68,13 +66,13 @@ class SetListSong extends Component {
 
   render() {
 
-    let styles = {
-      'greyedOut': {
-        'color': '#b1b1b1'
-      }
-    }
+    const styles = {
+      greyedOut: {
+        color: '#b1b1b1',
+      },
+    };
 
-    return(
+    return (
       <div>
         {
           this.props.spotifyURIs[this.getSongData('songName')] === false ?
@@ -87,32 +85,30 @@ class SetListSong extends Component {
           this.props.playerState &&
           this.props.playerState.setListID === this.props.setListID &&
           this.props.playerState.songID === this.props.songID
-          ? <SongPlayer spotifyURI={ this.props.spotifyURIs[this.getSongData('songName')] } /> : ''
+            ? <SongPlayer spotifyURI={ this.props.spotifyURIs[this.getSongData('songName')] } /> : ''
         }
 
       </div>
-    )
+    );
 
   }
 
 }
 
-const mapDispatchToProps = (dispatch) => {
-	return bindActionCreators({
+const mapDispatchToProps = dispatch => (
+  bindActionCreators({
     getSpotifyURI,
-    setPlayerState
-  }, dispatch);
-}
+    setPlayerState,
+  }, dispatch)
+);
 
-const mapStateToProps = (state) => {
-  return {
-    artistName: state.appState.artistName,
-    setLists: state.appState.setLists,
-    playerState: state.appState.playerState,
-    spotifyURIs: state.appState.spotifyURIs
-  }
-}
+const mapStateToProps = state => ({
+  artistName: state.appState.artistName,
+  setLists: state.appState.setLists,
+  playerState: state.appState.playerState,
+  spotifyURIs: state.appState.spotifyURIs,
+});
 
-SetListSong = connect(mapStateToProps, mapDispatchToProps)(SetListSong);
+const SetListSong = connect(mapStateToProps, mapDispatchToProps)(_SetListSong);
 
 export default SetListSong;

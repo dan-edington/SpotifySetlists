@@ -17,16 +17,16 @@ class App extends Component {
         oauth: {
           version: 2,
           auth: 'https://accounts.spotify.com/authorize',
-          grant: 'https://accounts.spotify.com/api/token'
+          grant: 'https://accounts.spotify.com/api/token',
         },
         refresh: true,
-        base: 'https://api.spotify.com/'
-      }
+        base: 'https://api.spotify.com/',
+      },
     });
 
     hello.init(
       { spotify: SpotifyCredentials.clientID },
-      { redirect_uri: SpotifyCredentials.callbackURL }
+      { redirect_uri: SpotifyCredentials.callbackURL },
     );
 
     this.props.setLoginStatus(this.getLoggedInStatus());

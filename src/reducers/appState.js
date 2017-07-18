@@ -25,59 +25,65 @@ const initialState = {
   artistName: '',
   playerState: false,
   setLists: [],
-  spotifyURIs: {}
+  spotifyURIs: {},
 };
+
+let newSpotifyURIs;
 
 const appState = (state = initialState, action) => {
 
-  switch(action.type) {
+  let returnState;
 
-    case "RESET_SEARCH_DATA":
-      return initialState
+  switch (action.type) {
+
+    case 'RESET_SEARCH_DATA':
+      returnState = state;
       break;
 
-    case "SEARCH_BAR_UPDATE":
+    case 'SEARCH_BAR_UPDATE':
 
-      return {
+      returnState = {
         ...state,
-        searchValue: action.payload
-      }
+        searchValue: action.payload,
+      };
       break;
 
-    case "ARTIST_SEARCH_SUCCESS":
+    case 'ARTIST_SEARCH_SUCCESS':
 
-      return {
+      returnState = {
         ...state,
         artistName: action.payload.artistName,
         setLists: action.payload.setLists,
-        spotifyURIs: action.payload.spotifyURIs
-      }
+        spotifyURIs: action.payload.spotifyURIs,
+      };
       break;
 
-    case "SET_SPOTIFY_URI":
+    case 'SET_SPOTIFY_URI':
 
-      let p = action.payload;
-      let newSpotifyURIs = Object.assign({}, state.spotifyURIs); // create dupe of array to prevent mutability
-      newSpotifyURIs[p.songName] = p.spotifyURI;
+      newSpotifyURIs = Object.assign({}, state.spotifyURIs);
+      newSpotifyURIs[action.payload.songName] = action.payload.spotifyURI;
 
-      return {
+      returnState = {
         ...state,
-        spotifyURIs: newSpotifyURIs
-      }
+        spotifyURIs: newSpotifyURIs,
+      };
 
       break;
 
-      case "SET_PLAYER_STATE":
-        return {
-          ...state,
-          playerState: action.payload
-        }
-        break;
+    case 'SET_PLAYER_STATE':
+      returnState = {
+        ...state,
+        playerState: action.payload,
+      };
+      break;
+
+    default:
+      returnState = state;
 
   }
 
-  return state;
+  return returnState;
 
-}
+};
 
 export default appState;

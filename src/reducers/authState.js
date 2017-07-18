@@ -1,32 +1,37 @@
 const initialState = {
   loggedIntoSpotify: false,
-  userID: null
+  userID: null,
 };
 
 const authState = (state = initialState, action) => {
 
-  switch(action.type) {
+  let returnState;
 
-    case "SET_LOGIN_STATUS":
+  switch (action.type) {
 
-      return {
+    case 'SET_LOGIN_STATUS':
+
+      returnState = {
         ...state,
-        loggedIntoSpotify: action.payload
-      }
+        loggedIntoSpotify: action.payload,
+      };
       break;
 
-    case "SET_USER_ID":
+    case 'SET_USER_ID':
 
-      return {
+      returnState = {
         ...state,
-        userID: action.payload
-      }
+        userID: action.payload,
+      };
       break;
+
+    default:
+      returnState = state;
 
   }
 
-  return state;
+  return returnState;
 
-}
+};
 
 export default authState;
