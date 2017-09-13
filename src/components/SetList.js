@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import { UserHandler, PlaylistHandler } from 'spotify-sdk';
 import SetListSong from './SetListSong';
-import hello from 'hellojs';
 
 class _SetList extends Component {
 
@@ -24,35 +24,23 @@ class _SetList extends Component {
       this.props.spotifyURIs[song.songName]
     ));
 
-    hello('spotify').api({
-      path: `/v1/users/${this.props.userID}/playlists`,
-      method: 'post',
-      data: JSON.stringify({
-        name: `${this.props.artistName} @ ${setListData.venue.name}, ${setListData.venue.city} (${setListData.date})`,
-        public: 'false',
-      }),
-    }).then((res) => {
+    const userHandler = new UserHandler();
+    const PLHandler = new PlaylistHandler();
 
-      this.addTracksToPlayList({
-        playListURIs,
-        playListID: res.id,
-      });
+    userHandler.me()
+      .then((userHandlerResponse) => {
 
-    });
+        PLHandler.create(userHandlerResponse._id, `${this.props.artistName} @ ${setListData.venue.name}, ${setListData.venue.city} (${setListData.date})`, false)
+          .then((PLHandlerResponse) => {
 
-  }
+            PLHandler.addTracks(playListURIs, userHandlerResponse._id, PLHandlerResponse._id)
+              .then(() => {
 
-  addTracksToPlayList(playlistData) {
+                alert("DONE! Check your Spotify playlists...");
 
-    hello('spotify').api({
-      path: `/v1/users/${this.props.userID}/playlists/${playlistData.playListID}/tracks`,
-      method: 'post',
-      data: JSON.stringify({
-        uris: playlistData.playListURIs,
-      }),
-    }).then(() => {
+              });
 
-      alert('DONE!');
+          })
 
     });
 
@@ -88,7 +76,7 @@ class _SetList extends Component {
           { encoreSongList }
           <hr />
           <button
-            onClick={ this.handleSavePlaylistClick.bind(this) } 
+            onClick={ this.handleSavePlaylistClick.bind(this) }
             className="btn btn-primary">Save as playlist</button>
         </div>
       </div>

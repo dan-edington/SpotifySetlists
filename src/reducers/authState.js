@@ -1,28 +1,71 @@
+import { Client } from 'spotify-sdk';
+import SpotifyCredentials from '../config/SpotifyCredentials';
+
+let client = Client.instance;
+
+client.settings = {
+  clientId: SpotifyCredentials.clientID,
+  secretId: SpotifyCredentials.clientSecret,
+  scopes: ['playlist-modify-private'],
+  redirect_uri: SpotifyCredentials.callbackURL,
+};
+
 const initialState = {
-  loggedIntoSpotify: false,
-  userID: null,
+  client,
+  loggedIn: false,
 };
 
 const authState = (state = initialState, action) => {
 
   let returnState;
+  let loggedIn;
 
   switch (action.type) {
 
-    case 'SET_LOGIN_STATUS':
+    case 'SET_TOKEN':
+
+      let theToken = null;
+      loggedIn = false;
+
+      if (sessionStorage.token) {
+
+        theToken = sessionStorage.token;
+
+      } else if (window.location.hash.split('&')[0].split('=')[1]) {
+
+        sessionStorage.token = window.location.hash.split('&')[0].split('=')[1];
+        theToken = sessionStorage.token;
+
+      }
+
+      client.token = theToken;
+
+      if (theToken) {
+
+        loggedIn = true;
+
+      }
 
       returnState = {
         ...state,
-        loggedIntoSpotify: action.payload,
+        client,
+        loggedIn,
       };
+
       break;
 
-    case 'SET_USER_ID':
+    case 'CLEAR_TOKEN':
+
+      sessionStorage.removeItem('token');
+      client.token = null;
+      loggedIn = false;
 
       returnState = {
         ...state,
-        userID: action.payload,
+        client,
+        loggedIn,
       };
+
       break;
 
     default:

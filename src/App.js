@@ -4,101 +4,50 @@ import { bindActionCreators } from 'redux';
 import SearchBar from './components/SearchBar';
 import SearchResults from './components/SearchResults';
 import SpotifyCredentials from './config/SpotifyCredentials';
-import { setLoginStatus, setUserID } from './actions';
-import hello from 'hellojs';
+import { setToken, clearToken } from './actions';
 
-class App extends Component {
+class _App extends Component {
 
   componentWillMount() {
 
-    hello.init({
-      spotify: {
-        name: 'spotify',
-        oauth: {
-          version: 2,
-          auth: 'https://accounts.spotify.com/authorize',
-          grant: 'https://accounts.spotify.com/api/token',
-        },
-        refresh: true,
-        base: 'https://api.spotify.com/',
-      },
-    });
-
-    hello.init(
-      { spotify: SpotifyCredentials.clientID },
-      { redirect_uri: SpotifyCredentials.callbackURL },
-    );
-
-    this.props.setLoginStatus(this.getLoggedInStatus());
-    this.setUserID();
-
-  }
-
-  getLoggedInStatus() {
-
-    let spotifyAuthResponse = hello('spotify').getAuthResponse();
-    return this.loggedIntoSpotify(spotifyAuthResponse);
-
-  }
-
-  setUserID() {
-
-    hello('spotify').api({
-      path: '/v1/me',
-      method: 'get'
-    }).then((response)=>{
-      this.props.setUserID(response.id);
-    });
-
-  }
-
-  loggedIntoSpotify(session) {
-
-    let currentTime = (new Date()).getTime() / 1000;
-	  return session && session.access_token && session.expires > currentTime;
+    this.props.setToken();
 
   }
 
   handleLoginClick() {
 
-    hello.login(
-      'spotify',
-      {
-        scope: 'playlist-modify-private'
-      },
-      () => {
-        this.props.setLoginStatus(this.getLoggedInStatus());
-        this.setUserID();
-      }
-    );
+    this.props.client.login().then((url) => {
+
+      window.location.href = url;
+
+    });
 
   }
 
   handleLogoutClick() {
 
-    hello.logout(
-      'spotify',
-      {
-        force: true
-      },
-      () => {
-        this.props.setLoginStatus(this.getLoggedInStatus());
-        this.setUserID();
-      }
-    );
+    this.props.clearToken();
+    window.location.href = `${window.location.protocol}//${window.location.host}`;
 
   }
 
   render() {
+
     return (
       <div className="container">
         <header className="page-header clearfix">
           <h1>Spotify Setlists</h1>
           {
             this.props.loggedIntoSpotify ?
-              <button className="btn btn-danger col-sm-2" onClick={ this.handleLogoutClick.bind(this) }>Log out of Spotify</button>
+              <button
+                className="btn btn-danger col-sm-2" onClick={ this.handleLogoutClick.bind(this) }>
+              Log out of Spotify
+              </button>
               :
-              <button className="btn btn-success col-sm-2" onClick={ this.handleLoginClick.bind(this) }>Log in with Spotify</button>
+              <button
+                className="btn btn-success col-sm-2" onClick={ this.handleLoginClick.bind(this) }>
+                Log in with Spotify
+              </button>
           }
         </header>
         {
@@ -111,23 +60,27 @@ class App extends Component {
         }
       </div>
     );
+
   }
 
 }
 
-const mapStateToProps = (state) => {
-  return {
-    loggedIntoSpotify: state.authState.loggedIntoSpotify
-  }
-}
+const mapStateToProps = state => ({
+
+  client: state.authState.client,
+  loggedIntoSpotify: state.authState.loggedIn,
+
+});
 
 const mapDispatchToProps = (dispatch) => {
-	return bindActionCreators({
-		setLoginStatus,
-    setUserID
-	}, dispatch);
-}
 
-App = connect(mapStateToProps, mapDispatchToProps)(App);
+  return bindActionCreators({
+    setToken,
+    clearToken,
+  }, dispatch);
+
+};
+
+const App = connect(mapStateToProps, mapDispatchToProps)(_App);
 
 export default App;

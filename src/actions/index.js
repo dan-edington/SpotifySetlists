@@ -1,5 +1,5 @@
 import axios from 'axios';
-import hello from 'hellojs';
+import { TrackHandler } from 'spotify-sdk';
 import APIServerCredentials from '../config/APIServerCredentials';
 
 export const artistSearchSuccess = artistSearchData => ({
@@ -12,11 +12,6 @@ export const searchBarUpdate = searchValue => ({
   payload: searchValue,
 });
 
-export const setLoginStatus = loginStatus => ({
-  type: 'SET_LOGIN_STATUS',
-  payload: loginStatus,
-});
-
 export const setSpotifyURI = URIData => ({
   type: 'SET_SPOTIFY_URI',
   payload: URIData,
@@ -27,13 +22,18 @@ export const setPlayerState = playerState => ({
   payload: playerState,
 });
 
-export const setUserID = userID => ({
-  type: 'SET_USER_ID',
-  payload: userID,
-});
-
 export const resetSearchData = () => ({
   type: 'RESET_SEARCH_DATA',
+  payload: null,
+});
+
+export const setToken = () => ({
+  type: 'SET_TOKEN',
+  payload: null,
+});
+
+export const clearToken = () => ({
+  type: 'CLEAR_TOKEN',
   payload: null,
 });
 
@@ -134,7 +134,7 @@ export const artistSearch = artistName => (
 
     axios({
       method: 'post',
-      url: `${APIServerCredentials.serverBaseURL}/searchSetlists`,
+      url: `${APIServerCredentials.serverBaseURL}/setlist.fm/searchSetlists`,
       data: {
         artistName,
       },
@@ -159,22 +159,21 @@ export const getSpotifyURI = songData => (
 
   (dispatch) => {
 
-    hello('spotify').api({
-      path: '/v1/search',
-      method: 'get',
-      data: {
-        q: `artist:${songData.artistName} track:${songData.songName}`,
-        type: 'track',
-        limit: 1,
-      },
-    }).then((response) => {
+    const track = new TrackHandler();
 
-      dispatch(setSpotifyURI({
-        spotifyURI: response.tracks.items.length ? response.tracks.items[0].uri : false,
-        songName: songData.songName,
-      }));
+    track.search(`${songData.artistName} ${songData.songName}`, { limit: 1 })
+      .then((trackCollection) => {
 
-    });
+        const theTrack = trackCollection[0];
+
+        dispatch(setSpotifyURI({
+
+          spotifyURI: theTrack ? theTrack._uri : false,
+          songName: songData.songName,
+
+        }));
+
+      });
 
   }
 
