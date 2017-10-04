@@ -14,7 +14,8 @@ class _SongPlayer extends Component {
         width="300"
         height="100"
         frameBorder="0"
-        allowTransparency="true">
+        allowTransparency="true"
+        title="songPlayer">
       </iframe>
     );
 

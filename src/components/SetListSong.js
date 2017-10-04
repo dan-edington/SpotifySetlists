@@ -8,12 +8,7 @@ class _SetListSong extends Component {
 
   getSongData(key) {
 
-    return this.props.setLists
-      [this.props.setListID]
-      .songLists
-      [this.props.isEncore ? 'encore' : 'main']
-      [this.props.songID]
-      [key];
+    return this.props.setLists[this.props.setListID].songLists[this.props.isEncore ? 'encore' : 'main'][this.props.songID][key];
 
   }
 

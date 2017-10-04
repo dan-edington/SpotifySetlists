@@ -3,7 +3,6 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import SearchBar from './components/SearchBar';
 import SearchResults from './components/SearchResults';
-import SpotifyCredentials from './config/SpotifyCredentials';
 import { setToken, clearToken } from './actions';
 
 class _App extends Component {
