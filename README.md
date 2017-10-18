@@ -1,6 +1,8 @@
 # Spotify Setlists
 Create Spotify playlists using setlist.fm data
 
+http://www.danedington.com/spotifySetlists
+
 ### Instructions
 
 Start APIServer:
@@ -20,11 +22,9 @@ npm run build
 
 ### TODO
 
-- Fix dodgy login on mobile (needs more testing, appears to be ok right now...problem on Spotify's end?)
+- Add error message for occasions when Spotify login problems occur
 - Eliminate duplicate requests to spotify api
 - Don't display results until all data loaded
-- Error handling
-- Collapsable results
-- Improve player preview
-- Styling
+- Implement proper error handling
+- Styling and UI improvements
 - Add option of adding non-artist songs (covers etc. - ie. Run The Jewels open with Queen - We Are The Champions)
