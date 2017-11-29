@@ -22,13 +22,13 @@ app.post('/setlist.fm/searchSetlists', (req, res) => {
 
   axios({
     method: 'get',
-    url: 'http://api.setlist.fm/rest/0.1/search/setlists.json',
+    url: 'https://api.setlist.fm/rest/1.0/search/setlists',
     params: {
-      apikey: SETLIST_API_KEY,
       artistName: req.body.artistName,
     },
     headers: {
       'Access-Control-Allow-Origin': '*',
+      'x-api-key': SETLIST_API_KEY,
     },
   }).then((response) => {
 

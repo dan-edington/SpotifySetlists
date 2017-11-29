@@ -37,6 +37,37 @@ export const clearToken = () => ({
   payload: null,
 });
 
+const getSpotifyURIs = setListData => {
+
+    return new Promise((resolve, reject) => {
+
+      const artistName = setListData.artistName;
+      const totalSongs = Object.keys(setListData.spotifyURIs).length;
+      let complete = 0;
+
+      for(const spotifySong in setListData.spotifyURIs) {
+  
+          const track = new TrackHandler();
+          
+          track.search(`${artistName} ${spotifySong}`, { limit: 1 })
+            .then((trackCollection) => {
+      
+              const theTrack = trackCollection[0];
+              setListData.spotifyURIs[spotifySong] = theTrack ? theTrack._uri : false;
+              complete++;
+              
+              if(complete === totalSongs) {
+                resolve(setListData);
+              }
+  
+            });
+  
+      }
+
+    });
+
+};
+
 const extractSetLists = (setListData, artistName) => {
 
   const extractedSetLists = {};
@@ -45,73 +76,43 @@ const extractSetLists = (setListData, artistName) => {
   extractedSetLists.setLists = [];
   extractedSetLists.spotifyURIs = {};
 
-  setListData.setlists.setlist.forEach((set) => {
+  setListData.setlist.forEach((set) => {
 
-    if ((set.artist['@name'].toLowerCase().trim() === artistName.toLowerCase().trim()) && typeof set.sets === 'object') {
+    if ((set.artist['name'].toLowerCase().trim() === artistName.toLowerCase().trim()) && typeof set.sets === 'object') {
 
       const mainSet = [];
       const encoreSet = [];
 
-      // Test if data returned is in "encore format"
-      if (set.sets.set.length) {
+      set.sets.set.forEach((subset) => {
 
-        // Has encore
+        let isEncore = subset.encore === undefined ? false : true;
 
-        if (set.sets.set[0].song.length && set.sets.set[1].song.length) {
+        subset.song.forEach((song) => {
 
-          set.sets.set[0].song.forEach((song) => {
+          if(!isEncore) {
+            
+            mainSet.push(song.name);
 
-            if (song['@name'] !== '') {
+          } else {
 
-              mainSet.push({
-                songName: song['@name'],
-              });
-              extractedSetLists.spotifyURIs[song['@name']] = null;
-
-            }
-
-          });
-
-          set.sets.set[1].song.forEach((song) => {
-
-            if (song['@name'] !== '') {
-
-              encoreSet.push({
-                songName: song['@name'],
-              });
-              extractedSetLists.spotifyURIs[song['@name']] = null;
-
-            }
-
-          });
-
-        }
-
-      } else if (set.sets.set.song.length) {
-
-        set.sets.set.song.forEach((song) => {
-
-          if (song['@name'] !== '') {
-
-            mainSet.push({
-              songName: song['@name'],
-            });
-            extractedSetLists.spotifyURIs[song['@name']] = null;
+            encoreSet.push(song.name);
 
           }
 
+          extractedSetLists.spotifyURIs[song.name] = null;
+
         });
 
-      }
+      });
 
-      if (mainSet.length >= 2) {
+      if (mainSet.length > 1) {
 
         extractedSetLists.setLists.push({
           venue: {
-            name: set.venue['@name'],
-            city: set.venue.city['@name'],
+            name: set.venue.name,
+            city: set.venue.city.name,
           },
-          date: set['@eventDate'],
+          date: set.eventDate,
           songLists: {
             main: mainSet,
             encore: encoreSet,
@@ -141,9 +142,9 @@ export const artistSearch = artistName => (
     }).then((response) => {
 
       const responseData = response.data;
-
-      const artistSearchResponse = extractSetLists(responseData, responseData.setlists.setlist[0].artist['@name']);
-      dispatch(artistSearchSuccess(artistSearchResponse));
+      const artistSearchResponse = extractSetLists(responseData, responseData.setlist[0].artist['name']);
+      const setListData = getSpotifyURIs(artistSearchResponse)
+                            .then(setListPlusSpotifyURIs => dispatch(artistSearchSuccess(setListPlusSpotifyURIs)));
 
     }).catch((error) => {
 

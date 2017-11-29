@@ -19,9 +19,9 @@ class _SetList extends Component {
       ...setListData.songLists.main,
       ...setListData.songLists.encore,
     ].filter(song => (
-      this.props.spotifyURIs[song.songName] ? true : false
+      this.props.spotifyURIs[song] ? true : false
     )).map(song => (
-      this.props.spotifyURIs[song.songName]
+      this.props.spotifyURIs[song]
     ));
 
     const userHandler = new UserHandler();

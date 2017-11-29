@@ -6,17 +6,17 @@ import SongPlayer from './SongPlayer';
 
 class _SetListSong extends Component {
 
-  getSongData(key) {
+  getSongName() {
 
-    return this.props.setLists[this.props.setListID].songLists[this.props.isEncore ? 'encore' : 'main'][this.props.songID][key];
+    return this.props.setLists[this.props.setListID].songLists[this.props.isEncore ? 'encore' : 'main'][this.props.songID];
 
   }
 
   getSpotifyURI() {
 
-    const songName = this.getSongData('songName');
+    const songName = this.getSongName();
 
-    if (this.props.spotifyURIs[this.getSongData('songName')] === null) {
+    if (this.props.spotifyURIs[songName] === null) {
 
       this.props.getSpotifyURI({
         artistName: this.props.artistName,
@@ -29,7 +29,7 @@ class _SetListSong extends Component {
 
   componentWillMount() {
 
-    this.getSpotifyURI();
+    //this.getSpotifyURI();
 
   }
 
@@ -67,12 +67,14 @@ class _SetListSong extends Component {
       },
     };
 
+    const songName = this.getSongName();
+
     return (
       <div>
         {
-          this.props.spotifyURIs[this.getSongData('songName')] === false ?
-            <p style={styles.greyedOut}>{ this.getSongData('songName') } (Unavailable)</p> :
-            <p onClick={this.handleSongClick.bind(this)}>{ this.getSongData('songName') }</p>
+          this.props.spotifyURIs[songName] === false ?
+            <p style={styles.greyedOut}>{ songName } (Unavailable)</p> :
+            <p onClick={this.handleSongClick.bind(this)}>{ songName }</p>
         }
 
 
@@ -80,7 +82,7 @@ class _SetListSong extends Component {
           this.props.playerState &&
           this.props.playerState.setListID === this.props.setListID &&
           this.props.playerState.songID === this.props.songID
-            ? <SongPlayer spotifyURI={ this.props.spotifyURIs[this.getSongData('songName')] } /> : ''
+            ? <SongPlayer spotifyURI={ this.props.spotifyURIs[songName] } /> : ''
         }
 
       </div>
