@@ -40,9 +40,9 @@ class _SetList extends Component {
 
               });
 
-          })
+          });
 
-    });
+      });
 
   }
 

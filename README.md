@@ -5,9 +5,9 @@ http://www.danedington.com/spotifySetlists
 
 ### Instructions
 
-Start APIServer:
+Start APIServer in src/server :
 ```sh
-node APIServer.js
+node index.js
 ```
 
 Start development build:
@@ -23,8 +23,5 @@ npm run build
 ### TODO
 
 - Add error message for occasions when Spotify login problems occur
-- Eliminate duplicate requests to spotify api
-- Don't display results until all data loaded
 - Implement proper error handling
 - Styling and UI improvements
-- Add option of adding non-artist songs (covers etc. - ie. Run The Jewels open with Queen - We Are The Champions)

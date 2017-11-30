@@ -1,11 +1,12 @@
+const config = require('./config');
 const express = require('express');
 const bodyParser = require('body-parser');
 const axios = require('axios');
 
 const app = express();
 
-const SETLIST_API_KEY = 'bf61b80f-1349-420b-bab2-dc488d472a3d';
-const port = 3001;
+const SETLIST_API_KEY = config.SETLIST_API_KEY;
+const port = config.PORT;
 
 // parse application/json
 app.use(bodyParser.json());

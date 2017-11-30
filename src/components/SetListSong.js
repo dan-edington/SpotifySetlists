@@ -12,27 +12,6 @@ class _SetListSong extends Component {
 
   }
 
-  getSpotifyURI() {
-
-    const songName = this.getSongName();
-
-    if (this.props.spotifyURIs[songName] === null) {
-
-      this.props.getSpotifyURI({
-        artistName: this.props.artistName,
-        songName,
-      });
-
-    }
-
-  }
-
-  componentWillMount() {
-
-    //this.getSpotifyURI();
-
-  }
-
   handleSongClick() {
 
     this.togglePlayer();
@@ -94,7 +73,6 @@ class _SetListSong extends Component {
 
 const mapDispatchToProps = dispatch => (
   bindActionCreators({
-    getSpotifyURI,
     setPlayerState,
   }, dispatch)
 );

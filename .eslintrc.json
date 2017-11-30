@@ -18,6 +18,7 @@
       "linebreak-style": ["error", "windows"],
       "padded-blocks": ["error", "always"],
       "func-names": ["error", "never"],
-      "no-plusplus": ["error", { "allowForLoopAfterthoughts": true }]
+      "no-plusplus": ["error", { "allowForLoopAfterthoughts": true }],
+      "no-unneeded-ternary": ["off"]
     }
 }

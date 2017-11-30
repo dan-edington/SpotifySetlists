@@ -37,36 +37,43 @@ export const clearToken = () => ({
   payload: null,
 });
 
-const getSpotifyURIs = setListData => {
+const getSpotifyURIs = setListData => (
 
-    return new Promise((resolve, reject) => {
+  new Promise((resolve, reject) => {
 
-      const artistName = setListData.artistName;
-      const totalSongs = Object.keys(setListData.spotifyURIs).length;
-      let complete = 0;
+    const artistName = setListData.artistName;
+    const totalSongs = Object.keys(setListData.spotifyURIs).length;
+    const setListOutput = { ...setListData };
+    let complete = 0;
 
-      for(const spotifySong in setListData.spotifyURIs) {
-  
-          const track = new TrackHandler();
-          
-          track.search(`${artistName} ${spotifySong}`, { limit: 1 })
-            .then((trackCollection) => {
+    for (const spotifySong in setListOutput.spotifyURIs) {
+
+      if (Object.prototype.hasOwnProperty.call(setListOutput.spotifyURIs, spotifySong)) {
+
+        const track = new TrackHandler();
       
-              const theTrack = trackCollection[0];
-              setListData.spotifyURIs[spotifySong] = theTrack ? theTrack._uri : false;
-              complete++;
-              
-              if(complete === totalSongs) {
-                resolve(setListData);
-              }
-  
-            });
-  
+        track.search(`${artistName} ${spotifySong}`, { limit: 1 })
+          .then((trackCollection) => {
+
+            const theTrack = trackCollection[0];
+            setListOutput.spotifyURIs[spotifySong] = theTrack ? theTrack._uri : false;
+            complete += 1;
+      
+            if (complete === totalSongs) {
+
+              resolve(setListOutput);
+
+            }
+
+          });
+
       }
 
-    });
+    }
 
-};
+  })
+
+);
 
 const extractSetLists = (setListData, artistName) => {
 
@@ -78,19 +85,19 @@ const extractSetLists = (setListData, artistName) => {
 
   setListData.setlist.forEach((set) => {
 
-    if ((set.artist['name'].toLowerCase().trim() === artistName.toLowerCase().trim()) && typeof set.sets === 'object') {
+    if ((set.artist.name.toLowerCase().trim() === artistName.toLowerCase().trim()) && typeof set.sets === 'object') {
 
       const mainSet = [];
       const encoreSet = [];
 
       set.sets.set.forEach((subset) => {
 
-        let isEncore = subset.encore === undefined ? false : true;
+        const isEncore = subset.encore === undefined ? false : true;
 
         subset.song.forEach((song) => {
 
-          if(!isEncore) {
-            
+          if (!isEncore) {
+
             mainSet.push(song.name);
 
           } else {
@@ -142,9 +149,11 @@ export const artistSearch = artistName => (
     }).then((response) => {
 
       const responseData = response.data;
-      const artistSearchResponse = extractSetLists(responseData, responseData.setlist[0].artist['name']);
-      const setListData = getSpotifyURIs(artistSearchResponse)
-                            .then(setListPlusSpotifyURIs => dispatch(artistSearchSuccess(setListPlusSpotifyURIs)));
+      const setlistArtistName = responseData.setlist[0].artist.name;
+      const artistSearchResponse = extractSetLists(responseData, setlistArtistName);
+      getSpotifyURIs(artistSearchResponse)
+        .then(
+          setListPlusSpotifyURIs => dispatch(artistSearchSuccess(setListPlusSpotifyURIs)));
 
     }).catch((error) => {
 
