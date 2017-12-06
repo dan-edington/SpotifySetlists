@@ -10,9 +10,9 @@
 /build
 
 # config
-/src/config/APIServerCredentials.js
-/src/config/SpotifyCredentials.js
-/src/server/config/index.js
+src/config/APIServerCredentials.js
+src/config/SpotifyCredentials.js
+src/server/config/index.js
 
 # misc
 .DS_Store
