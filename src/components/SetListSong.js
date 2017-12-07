@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { getSpotifyURI, setPlayerState } from '../actions';
+import { setPlayerState } from '../actions';
 import SongPlayer from './SongPlayer';
 
 class _SetListSong extends Component {
