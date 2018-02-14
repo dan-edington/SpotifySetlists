@@ -33,13 +33,11 @@ class _App extends Component {
 
   render() {
 
-    const msg = 'This site uses cookies. By continuing to use this site you agree to the use of cookies.';
+    const msg = 'This site uses cookies.';
 
     return (
       <div>
-        <CookieBanner
-          message={msg}
-        />
+        <CookieBanner message={msg} />
         <div className="container">
           <header className="page-header clearfix">
             <h1>Spotify Setlists</h1>

@@ -19,5 +19,5 @@ ReactDOM.render(
   <Provider store={SpotifySetlistStore}>
     <App />
   </Provider>,
-  document.getElementById('root')
+  document.getElementById('root'),
 );
