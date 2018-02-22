@@ -12,6 +12,11 @@ export const artistNotFound = () => ({
   payload: null,
 });
 
+export const initialSearchRun = () => ({
+  type: 'INITIAL_SEARCH_RUN',
+  payload: null,
+});
+
 export const searchBarUpdate = searchValue => ({
   type: 'SEARCH_BAR_UPDATE',
   payload: searchValue,
@@ -199,6 +204,16 @@ export const getSpotifyURI = songData => (
 
       });
 
+  }
+
+);
+
+export const setInitialSearchRun = () => (
+
+  (dispatch) => {
+
+    dispatch(initialSearchRun());
+    
   }
 
 );

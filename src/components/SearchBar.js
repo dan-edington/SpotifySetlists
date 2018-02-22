@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import styled from 'styled-components';
 import styleConfig from '../config/styleConfig';
-import { artistSearch, searchBarUpdate, resetSearchData } from '../actions';
+import { artistSearch, searchBarUpdate, resetSearchData, setInitialSearchRun } from '../actions';
 
 const SearchBarInput = styled.input`
   outline: none;
@@ -48,7 +48,7 @@ class _SearchBar extends Component {
     e.preventDefault();
     this.props.resetSearchData();
     this.props.artistSearch(this.props.searchValue);
-    this.props.initialSearchIsRun();
+    this.props.setInitialSearchRun();
 
   }
 
@@ -81,6 +81,7 @@ const mapDispatchToProps = dispatch => (
     artistSearch,
     searchBarUpdate,
     resetSearchData,
+    setInitialSearchRun,
   }, dispatch)
 );
 

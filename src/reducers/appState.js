@@ -26,6 +26,7 @@ const initialState = {
   playerState: false,
   setLists: [],
   spotifyURIs: {},
+  initialSearchRun: false,
 };
 
 let newSpotifyURIs;
@@ -63,6 +64,13 @@ const appState = (state = initialState, action) => {
         ...state,
         artistName: false
       }
+      break;
+
+    case 'INITIAL_SEARCH_RUN':
+      returnState = {
+        ...state,
+        initialSearchRun: true,
+      }  
       break;
 
     case 'SET_SPOTIFY_URI':

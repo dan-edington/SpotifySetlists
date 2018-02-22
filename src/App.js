@@ -30,18 +30,6 @@ const AuthButton = styled.button`
 
 class _App extends Component {
 
-  constructor() {
-
-    super();
-
-    this.state = {
-      initialSearchRun: false
-    }
-
-    this.initialSearchIsRun = this.initialSearchIsRun.bind(this);
-
-  }
-
   componentWillMount() {
 
     this.props.setToken();
@@ -62,14 +50,6 @@ class _App extends Component {
 
     this.props.clearToken();
     window.location.href = `${window.location.protocol}//${window.location.host}`;
-
-  }
-
-  initialSearchIsRun() {
-
-    this.setState({
-      initialSearchRun: true
-    });
 
   }
 
@@ -99,8 +79,8 @@ class _App extends Component {
           {
             this.props.loggedIntoSpotify ?
               <div className="row">
-                <SearchBar initialSearchIsRun={ this.initialSearchIsRun } />
-                { this.state.initialSearchRun ? <SearchResults /> : '' }
+                <SearchBar />
+                <SearchResults />
               </div> : ''
           }
         </div>

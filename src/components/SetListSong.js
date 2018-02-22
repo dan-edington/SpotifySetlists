@@ -50,12 +50,6 @@ class _SetListSong extends Component {
 
   render() {
 
-    const styles = {
-      greyedOut: {
-        color: '#b1b1b1',
-      },
-    };
-
     const songName = this.getSongName();
 
     return (
