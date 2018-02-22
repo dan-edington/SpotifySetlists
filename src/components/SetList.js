@@ -2,7 +2,55 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { UserHandler, PlaylistHandler } from 'spotify-sdk';
+import styled from 'styled-components';
+import styleConfig from '../config/styleConfig';
 import SetListSong from './SetListSong';
+
+const SetListContainer = styled.div`
+  margin: 30px auto 0 auto;
+  padding: 25px 25px 15px 25px;
+  max-width: 500px;
+  min-width: 300px;
+  background-color: ${styleConfig.colors.white};
+`;
+
+const SetListInfo = styled.h2`
+  color: ${styleConfig.colors.pink};
+  font-weight: 100;
+  font-size: 1.5em;
+  padding: 0;
+  margin: 0;
+`;
+
+const SetListSongCount = styled.h4`
+  color: ${styleConfig.colors.pink};
+  padding: 0;
+  margin: 10px 0;
+  font-weight: 100;
+`;
+
+const SongDivider = styled.hr`
+  padding: 0;
+  border: 0;
+  margin: 0;
+  width: 100%;
+  height: 1px;
+  background-color: ${styleConfig.colors.pink};
+`;
+
+const SavePlayListButton = styled.button`
+  outline: none; 
+  padding: 1em;
+  border: 0;
+  color: ${styleConfig.colors.pink};
+  background-color: ${styleConfig.colors.white};
+  cursor: pointer;
+  width: 100%;
+  display: block;
+  margin: 10px auto 0 auto;
+  max-width: 500px;
+  min-width: 300px;
+`;
 
 class _SetList extends Component {
 
@@ -59,26 +107,27 @@ class _SetList extends Component {
     ));
 
     return (
-      <div className="panel panel-default">
-        <header className="panel-heading">
-          <h2>
-            { this.props.artistName } @ { setListData.venue.name },
-            { setListData.venue.city } ({ setListData.date })
-          </h2>
-          <h4>
-            { (setListData.songLists.main.length + setListData.songLists.encore.length) } songs
-            { setListData.songLists.encore.length ? ', encore' : '' }
-          </h4>
-        </header>
-        <div className="panel-body">
-          { mainSongList }
-          { setListData.songLists.encore.length ? <hr /> : ''}
-          { encoreSongList }
-          <hr />
-          <button
-            onClick={ this.handleSavePlaylistClick.bind(this) }
-            className="btn btn-primary">Save as playlist</button>
-        </div>
+      <div>
+        <SetListContainer>
+          <header>
+            <SetListInfo>
+              { this.props.artistName } @ { setListData.venue.name },
+              { setListData.venue.city } ({ setListData.date })
+            </SetListInfo>
+            <SetListSongCount>
+              { (setListData.songLists.main.length + setListData.songLists.encore.length) } songs
+              { setListData.songLists.encore.length ? ', encore' : '' }
+            </SetListSongCount>
+          </header>
+          <SongDivider />
+          <div>
+            { mainSongList }
+            { setListData.songLists.encore.length ? <SongDivider /> : ''}
+            { encoreSongList }
+          </div>
+        </SetListContainer>
+        <SavePlayListButton
+              onClick={ this.handleSavePlaylistClick.bind(this) }>Save as playlist</SavePlayListButton>
       </div>
     );
 

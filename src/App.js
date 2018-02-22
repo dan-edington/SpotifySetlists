@@ -6,6 +6,27 @@ import CookieBanner from 'react-cookie-banner';
 import SearchBar from './components/SearchBar';
 import SearchResults from './components/SearchResults';
 import { setToken, clearToken } from './actions';
+import styleConfig from './config/styleConfig';
+
+const AppHeader = styled.h1`
+  font-family: 'Abril Fatface', cursive;
+  color: ${styleConfig.colors.white};
+  font-size: 5em;
+  text-align: center;
+  padding: 50px 0 0 0;
+  margin: 0;
+`;
+
+const AuthButton = styled.button`
+  margin: 50px auto 25px auto;
+  display: block;
+  padding: 1em;
+  border: 0;
+  color: ${styleConfig.colors.pink};
+  background-color: ${styleConfig.colors.white};
+  outline: none;
+  cursor: pointer;
+`;
 
 class _App extends Component {
 
@@ -61,18 +82,18 @@ class _App extends Component {
         <CookieBanner message={msg} />
         <div className="container">
           <header className="page-header clearfix">
-            <h1>Spotify Setlists</h1>
+            <AppHeader>Spotify Setlists</AppHeader>
             {
               this.props.loggedIntoSpotify ?
-                <button
+                <AuthButton
                   className="btn btn-danger col-sm-2" onClick={ this.handleLogoutClick.bind(this) }>
                 Log out of Spotify
-                </button>
+                </AuthButton>
                 :
-                <button
+                <AuthButton
                   className="btn btn-success col-sm-2" onClick={ this.handleLoginClick.bind(this) }>
                   Log in with Spotify
-                </button>
+                </AuthButton>
             }
           </header>
           {
@@ -81,7 +102,6 @@ class _App extends Component {
                 <SearchBar initialSearchIsRun={ this.initialSearchIsRun } />
                 { this.state.initialSearchRun ? <SearchResults /> : '' }
               </div> : ''
-
           }
         </div>
       </div>

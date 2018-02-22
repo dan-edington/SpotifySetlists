@@ -1,8 +1,18 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import styled from 'styled-components';
+import styleConfig from '../config/styleConfig';
 import { setPlayerState } from '../actions';
 import SongPlayer from './SongPlayer';
+
+const UnavailableSong = styled.p`
+  color: ${styleConfig.colors.grey};
+`;
+
+const Song = styled.p`
+  color: ${styleConfig.colors.pink};
+`;
 
 class _SetListSong extends Component {
 
@@ -52,11 +62,9 @@ class _SetListSong extends Component {
       <div>
         {
           this.props.spotifyURIs[songName] === false ?
-            <p style={styles.greyedOut}>{ songName } (Unavailable)</p> :
-            <p onClick={this.handleSongClick.bind(this)}>{ songName }</p>
+            <UnavailableSong>{ songName } (Unavailable)</UnavailableSong> :
+            <Song>{ songName }</Song>
         }
-
-
         {
           this.props.playerState &&
           this.props.playerState.setListID === this.props.setListID &&

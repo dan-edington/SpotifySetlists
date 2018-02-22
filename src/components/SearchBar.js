@@ -1,7 +1,36 @@
 import React, {Component} from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import styled from 'styled-components';
+import styleConfig from '../config/styleConfig';
 import { artistSearch, searchBarUpdate, resetSearchData } from '../actions';
+
+const SearchBarInput = styled.input`
+  outline: none;
+  border: 0;
+  color: ${styleConfig.colors.pink};
+  text-align: center;
+  padding: 1em;
+  flex: 1;
+  margin-right: 2px;
+`;
+
+const SearchButton = styled.input`
+  outline: none; 
+  padding: 1em;
+  border: 0;
+  color: ${styleConfig.colors.pink};
+  background-color: ${styleConfig.colors.white};
+  cursor: pointer;
+`;
+
+const SearchForm = styled.form`
+  display: flex;
+  margin: 0 auto;
+  padding: 0 20px;
+  max-width: 500px;
+  min-width: 300px;
+`;
 
 class _SearchBar extends Component {
 
@@ -32,23 +61,15 @@ class _SearchBar extends Component {
   render() {
 
     return (
-      <div className="col-sm-12">
-        <form className="form-horizontal" onSubmit={this.handleSubmit}>
-          <div className="form-group">
-            <div className="col-sm-10 pull-left">
-              <input
-                name="searchBarInput"
-                type="text"
-                onChange={this.handleChange}
-                value={this.props.searchValue}
-                className="form-control"
-              />
-            </div>
-            <input type="submit" value="Search" className="btn btn-success col-sm-2 pull-left" />
-          </div>
-        </form>
-        <hr />
-      </div>
+        <SearchForm onSubmit={this.handleSubmit}>
+          <SearchBarInput
+            name="searchBarInput"
+            type="text"
+            onChange={this.handleChange}
+            value={this.props.searchValue}
+          />
+          <SearchButton type="submit" value="Search" />
+        </SearchForm>
     );
 
   }
