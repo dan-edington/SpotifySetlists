@@ -19,6 +19,7 @@ class _SearchBar extends Component {
     e.preventDefault();
     this.props.resetSearchData();
     this.props.artistSearch(this.props.searchValue);
+    this.props.initialSearchIsRun();
 
   }
 

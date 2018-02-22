@@ -1,12 +1,25 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import styled from 'styled-components';
 import CookieBanner from 'react-cookie-banner';
 import SearchBar from './components/SearchBar';
 import SearchResults from './components/SearchResults';
 import { setToken, clearToken } from './actions';
 
 class _App extends Component {
+
+  constructor() {
+
+    super();
+
+    this.state = {
+      initialSearchRun: false
+    }
+
+    this.initialSearchIsRun = this.initialSearchIsRun.bind(this);
+
+  }
 
   componentWillMount() {
 
@@ -28,6 +41,14 @@ class _App extends Component {
 
     this.props.clearToken();
     window.location.href = `${window.location.protocol}//${window.location.host}`;
+
+  }
+
+  initialSearchIsRun() {
+
+    this.setState({
+      initialSearchRun: true
+    });
 
   }
 
@@ -57,8 +78,8 @@ class _App extends Component {
           {
             this.props.loggedIntoSpotify ?
               <div className="row">
-                <SearchBar />
-                <SearchResults />
+                <SearchBar initialSearchIsRun={ this.initialSearchIsRun } />
+                { this.state.initialSearchRun ? <SearchResults /> : '' }
               </div> : ''
 
           }
