@@ -7,6 +7,11 @@ export const artistSearchSuccess = artistSearchData => ({
   payload: artistSearchData,
 });
 
+export const artistNotFound = () => ({
+  type: 'ARTIST_NOT_FOUND',
+  payload: null,
+});
+
 export const searchBarUpdate = searchValue => ({
   type: 'SEARCH_BAR_UPDATE',
   payload: searchValue,
@@ -149,11 +154,20 @@ export const artistSearch = artistName => (
     }).then((response) => {
 
       const responseData = response.data;
-      const setlistArtistName = responseData.setlist[0].artist.name;
-      const artistSearchResponse = extractSetLists(responseData, setlistArtistName);
-      getSpotifyURIs(artistSearchResponse)
-        .then(
-          setListPlusSpotifyURIs => dispatch(artistSearchSuccess(setListPlusSpotifyURIs)));
+
+      if(responseData.setlist && responseData.setlist.length > 0) {
+
+        const setlistArtistName = responseData.setlist[0].artist.name;
+        const artistSearchResponse = extractSetLists(responseData, setlistArtistName);
+        getSpotifyURIs(artistSearchResponse)
+          .then(
+            setListPlusSpotifyURIs => dispatch(artistSearchSuccess(setListPlusSpotifyURIs)));
+
+      } else {
+
+        dispatch(artistNotFound());
+
+      }
 
     }).catch((error) => {
 

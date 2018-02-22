@@ -8,6 +8,7 @@
 
 # production
 /build
+todo.md
 
 # config
 src/config/APIServerCredentials.js

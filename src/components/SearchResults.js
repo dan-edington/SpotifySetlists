@@ -7,13 +7,19 @@ class _SearchResults extends Component {
 
   render() {
 
-    const setLists = this.props.setLists.map((set, i) => (
-      <SetList key={i} setListID={i} />
-    ));
+    let setListsOutput;
+
+    if(!this.props.artistName) {
+      setListsOutput = `Artist not found!`
+    } else {
+      setListsOutput = this.props.setLists.map((set, i) => (
+        <SetList key={i} setListID={i} />
+      ));
+    }
 
     return (
       <div className="col-sm-12">
-        {setLists}
+        {setListsOutput}
       </div>
     );
 

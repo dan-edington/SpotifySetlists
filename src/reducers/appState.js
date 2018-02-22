@@ -58,6 +58,13 @@ const appState = (state = initialState, action) => {
       };
       break;
 
+    case 'ARTIST_NOT_FOUND':
+      returnState = {
+        ...state,
+        artistName: false
+      }
+      break;
+
     case 'SET_SPOTIFY_URI':
 
       newSpotifyURIs = Object.assign({}, state.spotifyURIs);
