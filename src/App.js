@@ -37,6 +37,7 @@ const Blurb = styled.p`
   color: ${styleConfig.colors.white};
   text-align: center;
   font-size: 0.9em;
+  padding: 0 10px;
 `;
 
 class _App extends Component {

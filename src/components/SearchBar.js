@@ -6,6 +6,7 @@ import styleConfig from '../config/styleConfig';
 import { artistSearch, searchBarUpdate, resetSearchData, setInitialSearchRun } from '../actions';
 
 const SearchBarInput = styled.input`
+  border-radius: 0;
   outline: none;
   border: 0;
   color: ${styleConfig.colors.pink};
@@ -16,6 +17,7 @@ const SearchBarInput = styled.input`
 `;
 
 const SearchButton = styled.input`
+  border-radius: 0;
   outline: none; 
   padding: 1em;
   border: 0;

@@ -19,13 +19,15 @@ injectGlobal([`
 
 html, body {
   width: 100%;
-  height: 100%;
+  height: 100vh;
+  min-height: 100vh;
+  max-height: 100vh;
   font-family: sans-serif;
   border: 0;
   padding: 0;
   margin: 0;
   font-size: 16px;
-  background: linear-gradient(to bottom, ${styleConfig.colors.pink} 0%, ${styleConfig.colors.yellow} 100%);
+  background: linear-gradient(to bottom, ${styleConfig.colors.pink} 0%, ${styleConfig.colors.yellow} 100vh);
   background-repeat: no-repeat;
   background-attachment: fixed;
 }
