@@ -22,6 +22,7 @@ const SearchButton = styled.input`
   color: ${styleConfig.colors.pink};
   background-color: ${styleConfig.colors.white};
   cursor: pointer;
+  -webkit-appearance: none;
 `;
 
 const SearchForm = styled.form`

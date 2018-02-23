@@ -5,6 +5,7 @@ import { UserHandler, PlaylistHandler } from 'spotify-sdk';
 import styled from 'styled-components';
 import styleConfig from '../config/styleConfig';
 import SetListSong from './SetListSong';
+import SongPlayer from './SongPlayer';
 
 const SetListContainer = styled.div`
   margin: 30px auto 0 auto;
@@ -17,16 +18,22 @@ const SetListContainer = styled.div`
 const SetListInfo = styled.h2`
   color: ${styleConfig.colors.pink};
   font-weight: 100;
-  font-size: 1.5em;
+  font-size: ${
+    props => (
+      (((parseInt(props.level, 10) + -3) * -1) + 1) * 0.85
+    )
+  }em;
   padding: 0;
   margin: 0;
+  margin-bottom: 10px
 `;
 
 const SetListSongCount = styled.h4`
   color: ${styleConfig.colors.pink};
   padding: 0;
-  margin: 10px 0;
+  margin: 20px 0;
   font-weight: 100;
+  font-size: 0.9em
 `;
 
 const SongDivider = styled.hr`
@@ -50,6 +57,7 @@ const SavePlayListButton = styled.button`
   margin: 10px auto 0 auto;
   max-width: 500px;
   min-width: 300px;
+  -webkit-appearance: none;
 `;
 
 class _SetList extends Component {
@@ -97,22 +105,36 @@ class _SetList extends Component {
   render() {
 
     const setListData = this.props.setLists[this.props.setListID];
+    let songCounter = 0;
 
-    const mainSongList = setListData.songLists.main.map((song, i) => (
-      <SetListSong key={i} songID={i} setListID={this.props.setListID} isEncore={false} />
-    ));
+    const mainSongList = setListData.songLists.main.map((song, i) => {
 
-    const encoreSongList = setListData.songLists.encore.map((song, i) => (
-      <SetListSong key={i} songID={i} setListID={this.props.setListID} isEncore={true} />
-    ));
+      const output = <SetListSong key={i} songID={i} setListID={this.props.setListID} isEncore={false} /> 
+      songCounter++;
+      return output;
+
+    });
+
+    const encoreSongList = setListData.songLists.encore.map((song, i) => {
+
+      const output = <SetListSong key={i} songID={i} setListID={this.props.setListID} isEncore={true} />
+      songCounter++;
+      return output;
+
+    });
 
     return (
       <div>
         <SetListContainer>
           <header>
-            <SetListInfo>
-              { this.props.artistName } @ { setListData.venue.name },
-              { setListData.venue.city } ({ setListData.date })
+            <SetListInfo level="1">
+              { this.props.artistName }
+            </SetListInfo>
+            <SetListInfo level="2">
+            { setListData.venue.name }, { setListData.venue.city }
+            </SetListInfo>
+            <SetListInfo level="3">
+              { setListData.date }
             </SetListInfo>
             <SetListSongCount>
               { (setListData.songLists.main.length + setListData.songLists.encore.length) } songs

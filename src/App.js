@@ -26,6 +26,7 @@ const AuthButton = styled.button`
   background-color: ${styleConfig.colors.white};
   outline: none;
   cursor: pointer;
+  -webkit-appearance: none;
 `;
 
 class _App extends Component {
