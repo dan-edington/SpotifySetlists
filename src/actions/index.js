@@ -86,11 +86,16 @@ const getSpotifyURIs = setListData => (
 
 );
 
+const capitaliseString = inputString => (
+  inputString.trim().split(' ').map(piece => piece.charAt(0).toUpperCase() + piece.slice(1).toLowerCase())
+    .join(' ')
+);
+
 const extractSetLists = (setListData, artistName) => {
 
   const extractedSetLists = {};
 
-  extractedSetLists.artistName = artistName;
+  extractedSetLists.artistName = capitaliseString(artistName);
   extractedSetLists.setLists = [];
   extractedSetLists.spotifyURIs = {};
 
@@ -167,8 +172,8 @@ export const artistSearch = artistName => (
 
       if(responseData.setlist && responseData.setlist.length > 0) {
 
-        const setlistArtistName = responseData.setlist[0].artist.name;
-        const artistSearchResponse = extractSetLists(responseData, setlistArtistName);
+        //const setlistArtistName = responseData.setlist[0].artist.name;
+        const artistSearchResponse = extractSetLists(responseData, artistName);
         getSpotifyURIs(artistSearchResponse)
           .then(
             setListPlusSpotifyURIs => {
