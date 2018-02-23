@@ -166,11 +166,15 @@ export const artistSearch = artistName => (
         const artistSearchResponse = extractSetLists(responseData, setlistArtistName);
         getSpotifyURIs(artistSearchResponse)
           .then(
-            setListPlusSpotifyURIs => dispatch(artistSearchSuccess(setListPlusSpotifyURIs)));
+            setListPlusSpotifyURIs => {
+              dispatch(artistSearchSuccess(setListPlusSpotifyURIs));
+              dispatch(initialSearchRun());
+            });
 
       } else {
 
         dispatch(artistNotFound());
+        dispatch(initialSearchRun());
 
       }
 

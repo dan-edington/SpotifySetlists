@@ -16,7 +16,10 @@ const SetListContainer = styled.div`
 `;
 
 const SetListInfo = styled.h2`
-  color: ${styleConfig.colors.pink};
+  color: ${ props => (
+      parseInt(props.level, 10) === 1 ? styleConfig.colors.grey : styleConfig.colors.pink
+    )
+  };
   font-weight: 100;
   font-size: ${
     props => (
@@ -25,7 +28,11 @@ const SetListInfo = styled.h2`
   }em;
   padding: 0;
   margin: 0;
-  margin-bottom: 10px
+  margin-bottom: 10px;
+  ${ props => ( 
+      parseInt(props.level, 10) === 1 ? 'font-family: \'Abril Fatface\'' : ''
+    )
+  }
 `;
 
 const SetListSongCount = styled.h4`

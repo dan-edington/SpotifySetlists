@@ -60,7 +60,7 @@ class _SetListSong extends Component {
         {
           this.props.spotifyURIs[songName] === false ?
             <Song available="false">{ songName } (Unavailable)</Song> :
-            <Song available="true" onClick={this.togglePlayer.bind(this)}>{ songName }({this.props.songID})</Song>
+            <Song available="true" onClick={this.togglePlayer.bind(this)}>{ songName }</Song>
         }
         {
           this.props.spotifyURIs[songName] && 

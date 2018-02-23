@@ -18,7 +18,7 @@ const AppHeader = styled.h1`
 `;
 
 const AuthButton = styled.button`
-  margin: 50px auto 25px auto;
+  margin: 25px auto;
   display: block;
   padding: 1em;
   border: 0;
@@ -27,6 +27,16 @@ const AuthButton = styled.button`
   outline: none;
   cursor: pointer;
   -webkit-appearance: none;
+`;
+
+const Blurb = styled.p`
+  max-width: 500px;
+  min-width: 300px;
+  display: block;
+  margin: 25px auto 0 auto;
+  color: ${styleConfig.colors.white};
+  text-align: center;
+  font-size: 0.9em;
 `;
 
 class _App extends Component {
@@ -64,6 +74,7 @@ class _App extends Component {
         <div className="container">
           <header className="page-header clearfix">
             <AppHeader>Spotify Setlists</AppHeader>
+            <Blurb>This app allows you to search for setlists by artist. You then have the option of previewing individual songs or saving the setlist as a playlist to your Spotify account.</Blurb>
             {
               this.props.loggedIntoSpotify ?
                 <AuthButton
