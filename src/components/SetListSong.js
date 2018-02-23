@@ -8,11 +8,11 @@ import SongPlayer from './SongPlayer';
 
 const Song = styled.p`
   color: ${ 
-    props => ( props.available == 'true' ? styleConfig.colors.pink : styleConfig.colors.grey )
+    props => ( props.available === 'true' ? styleConfig.colors.pink : styleConfig.colors.grey )
   };
   cursor: pointer;
   cursor: ${ 
-    props => ( props.available == 'true' ? 'pointer' : 'default' )
+    props => ( props.available === 'true' ? 'pointer' : 'default' )
   };
   display: inline-block;
 `;

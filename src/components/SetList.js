@@ -5,7 +5,6 @@ import { UserHandler, PlaylistHandler } from 'spotify-sdk';
 import styled from 'styled-components';
 import styleConfig from '../config/styleConfig';
 import SetListSong from './SetListSong';
-import SongPlayer from './SongPlayer';
 
 const SetListContainer = styled.div`
   margin: 30px auto 0 auto;
@@ -112,23 +111,14 @@ class _SetList extends Component {
   render() {
 
     const setListData = this.props.setLists[this.props.setListID];
-    let songCounter = 0;
 
-    const mainSongList = setListData.songLists.main.map((song, i) => {
+    const mainSongList = setListData.songLists.main.map((song, i) => 
+      <SetListSong key={i} songID={i} setListID={this.props.setListID} isEncore={false} /> 
+    );
 
-      const output = <SetListSong key={i} songID={i} setListID={this.props.setListID} isEncore={false} /> 
-      songCounter++;
-      return output;
-
-    });
-
-    const encoreSongList = setListData.songLists.encore.map((song, i) => {
-
-      const output = <SetListSong key={i} songID={i} setListID={this.props.setListID} isEncore={true} />
-      songCounter++;
-      return output;
-
-    });
+    const encoreSongList = setListData.songLists.encore.map((song, i) => 
+      <SetListSong key={i} songID={i} setListID={this.props.setListID} isEncore={true} />
+    );
 
     return (
       <div>

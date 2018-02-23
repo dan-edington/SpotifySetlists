@@ -56,6 +56,19 @@ const getSpotifyURIs = setListData => (
     const setListOutput = { ...setListData };
     let complete = 0;
 
+    const extractURIs = spotifySong => (
+
+      (trackCollection) => {
+        const theTrack = trackCollection[0];
+        setListOutput.spotifyURIs[spotifySong] = theTrack ? theTrack._uri : false;
+        complete += 1;
+        if (complete === totalSongs) {
+          resolve(setListOutput);
+        }
+      }
+
+    );
+
     for (const spotifySong in setListOutput.spotifyURIs) {
 
       if (Object.prototype.hasOwnProperty.call(setListOutput.spotifyURIs, spotifySong)) {
@@ -63,19 +76,7 @@ const getSpotifyURIs = setListData => (
         const track = new TrackHandler();
       
         track.search(`${artistName} ${spotifySong}`, { limit: 1 })
-          .then((trackCollection) => {
-
-            const theTrack = trackCollection[0];
-            setListOutput.spotifyURIs[spotifySong] = theTrack ? theTrack._uri : false;
-            complete += 1;
-      
-            if (complete === totalSongs) {
-
-              resolve(setListOutput);
-
-            }
-
-          });
+          .then(extractURIs(spotifySong));
 
       }
 
