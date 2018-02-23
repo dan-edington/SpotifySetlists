@@ -9,12 +9,13 @@ import { setToken, clearToken } from './actions';
 import styleConfig from './config/styleConfig';
 
 const AppHeader = styled.h1`
-  font-family: 'Abril Fatface', cursive;
+  font-family: ${styleConfig.fonts.mainHeading}, cursive;
   color: ${styleConfig.colors.white};
   font-size: 5em;
   text-align: center;
   padding: 50px 0 0 0;
   margin: 0;
+  font-weight: 100;
 `;
 
 const AuthButton = styled.button`

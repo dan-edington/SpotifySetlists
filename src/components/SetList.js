@@ -29,7 +29,7 @@ const SetListInfo = styled.h2`
   margin: 0;
   margin-bottom: 10px;
   ${ props => ( 
-      parseInt(props.level, 10) === 1 ? 'font-family: \'Abril Fatface\'' : ''
+      parseInt(props.level, 10) === 1 ? `font-family: '${styleConfig.fonts.mainHeading}'` : ''
     )
   }
 `;

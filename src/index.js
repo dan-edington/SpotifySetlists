@@ -9,9 +9,13 @@ import App from './App';
 import appState from './reducers/appState';
 import authState from './reducers/authState';
 
+const fontImports = styleConfig.fontImports.map(url => (
+  `@import url('${url}');`
+)).join('\r\n');
+
 injectGlobal([`
 
-@import url('https://fonts.googleapis.com/css?family=Abril+Fatface');
+${ fontImports }
 
 * {
   box-sizing: border-box;
