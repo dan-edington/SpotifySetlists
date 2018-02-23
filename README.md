@@ -1,7 +1,7 @@
 # Spotify Setlists
 Create Spotify playlists using setlist.fm data
 
-http://www.danedington.com/spotifySetlists
+https://spotify-setlists.danedington.com
 
 ### Instructions
 
@@ -20,8 +20,10 @@ Start production build:
 npm run build
 ```
 
+After creating a production build, go into build/index.html and change the path of the main.js bundle to be /static/js (CRA build issue)
+
 ### TODO
 
 - Add error message for occasions when Spotify login problems occur
 - Implement proper error handling
-- Styling and UI improvements
+- Remove create-react-app (this version contains a bug as noted above) and add custom build

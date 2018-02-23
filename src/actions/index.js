@@ -106,6 +106,10 @@ const extractSetLists = (setListData, artistName) => {
 
         subset.song.forEach((song) => {
 
+          if(song.name === '') {
+            return false;
+          }
+
           if (!isEncore) {
 
             mainSet.push(song.name);
