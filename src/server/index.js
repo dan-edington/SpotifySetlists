@@ -2,6 +2,7 @@ const config = require('./config');
 const express = require('express');
 const bodyParser = require('body-parser');
 const fetch = require('node-fetch');
+const serverlessHTTP = require('serverless-http');
 
 const app = express();
 const port = config.serverConfig.port;
@@ -18,14 +19,13 @@ app.use((req, res, next) => {
 
 app.post('/searchSetlists', (req, res) => {
 
-  const SETLIST_API_KEY = config.keys.setlistfm;
   const query = `?artistName=${req.body.artistName}`;
 
   fetch(`https://api.setlist.fm/rest/1.0/search/setlists${query}`, {
     method: 'get',
     headers: {
       'Access-Control-Allow-Origin': '*',
-      'x-api-key': SETLIST_API_KEY,
+      'x-api-key': config.keys.setlistfm,
       'Accept': 'application/json',
     },
   })
@@ -47,3 +47,5 @@ app.listen(port, () => {
   console.log(`Listening on port ${port}...`);
 
 });
+
+module.exports.handler = serverlessHTTP(app);

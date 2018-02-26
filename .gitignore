@@ -8,12 +8,14 @@
 
 # production
 /build
-todo.md
 
 # config
 src/config/APIServerCredentials.js
 src/config/SpotifyCredentials.js
 src/server/config/index.js
+
+# serverless
+src/server/.serverless/
 
 # misc
 .DS_Store
