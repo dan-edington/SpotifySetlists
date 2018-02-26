@@ -1,7 +1,7 @@
 # Spotify Setlists
 Create Spotify playlists using setlist.fm data
 
-https://spotify-setlists.danedington.com
+https://spotifysetlists.danedington.com
 
 ### Instructions
 
