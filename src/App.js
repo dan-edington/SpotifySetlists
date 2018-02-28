@@ -28,6 +28,7 @@ const AuthButton = styled.button`
   outline: none;
   cursor: pointer;
   -webkit-appearance: none;
+  font-size: 16px;
 `;
 
 const Blurb = styled.p`

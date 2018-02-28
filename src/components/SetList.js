@@ -64,6 +64,7 @@ const SavePlayListButton = styled.button`
   max-width: 500px;
   min-width: 300px;
   -webkit-appearance: none;
+  font-size: 16px;
 `;
 
 class _SetList extends Component {

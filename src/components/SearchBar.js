@@ -14,9 +14,11 @@ const SearchBarInput = styled.input`
   padding: 1em;
   flex: 1;
   margin-right: 2px;
+  font-size: 16px;
 `;
 
 const SearchButton = styled.input`
+  font-size: 16px;
   border-radius: 0;
   outline: none; 
   padding: 1em;
