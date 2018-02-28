@@ -73,26 +73,24 @@ class _App extends Component {
     return (
       <div>
         <CookieBanner message={msg} />
-        <div className="container">
-          <header className="page-header clearfix">
+        <div>
+          <header>
             <AppHeader>Spotify Setlists</AppHeader>
             <Blurb>This app allows you to search for setlists by artist. You then have the option of previewing individual songs or saving the setlist as a playlist to your Spotify account.</Blurb>
             {
               this.props.loggedIntoSpotify ?
-                <AuthButton
-                  className="btn btn-danger col-sm-2" onClick={ this.handleLogoutClick.bind(this) }>
+                <AuthButton onClick={ this.handleLogoutClick.bind(this) }>
                 Log out of Spotify
                 </AuthButton>
                 :
-                <AuthButton
-                  className="btn btn-success col-sm-2" onClick={ this.handleLoginClick.bind(this) }>
+                <AuthButton onClick={ this.handleLoginClick.bind(this) }>
                   Log in with Spotify
                 </AuthButton>
             }
           </header>
           {
             this.props.loggedIntoSpotify ?
-              <div className="row">
+              <div>
                 <SearchBar />
                 <SearchResults />
               </div> : ''
