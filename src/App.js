@@ -5,6 +5,7 @@ import styled from 'styled-components';
 import CookieBanner from 'react-cookie-banner';
 import SearchBar from './components/SearchBar';
 import SearchResults from './components/SearchResults';
+import SearchSpinner from './components/SearchSpinner';
 import { setToken, clearToken } from './actions';
 import styleConfig from './config/styleConfig';
 
@@ -13,9 +14,15 @@ const AppHeader = styled.h1`
   color: ${styleConfig.colors.white};
   font-size: 5em;
   text-align: center;
-  padding: 50px 0 0 0;
+  padding: 50px 10px 0 10px;
   margin: 0;
   font-weight: 100;
+
+  @media (max-width: 482px) {
+    padding-top: 25px;
+    line-height: 90px;
+  }
+
 `;
 
 const AuthButton = styled.button`
@@ -93,6 +100,7 @@ class _App extends Component {
             this.props.loggedIntoSpotify ?
               <div>
                 <SearchBar />
+                <SearchSpinner isSearching={this.props.isSearching} />
                 <SearchResults />
               </div> : ''
           }
@@ -105,10 +113,9 @@ class _App extends Component {
 }
 
 const mapStateToProps = state => ({
-
   client: state.authState.client,
   loggedIntoSpotify: state.authState.loggedIn,
-
+  isSearching: state.appState.isSearching,
 });
 
 const mapDispatchToProps = (dispatch) => {

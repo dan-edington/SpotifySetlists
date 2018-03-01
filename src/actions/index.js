@@ -27,6 +27,11 @@ export const setSpotifyURI = URIData => ({
   payload: URIData,
 });
 
+export const setSearchState = isSearchRunning => ({
+  type: 'SET_SEARCH_STATE',
+  payload: isSearchRunning,
+});
+
 export const setPlayerState = playerState => ({
   type: 'SET_PLAYER_STATE',
   payload: playerState,
@@ -160,6 +165,8 @@ export const artistSearch = artistName => (
 
   (dispatch) => {
 
+    dispatch(setSearchState(true));
+
     axios({
       method: 'post',
       url: `${APIServerCredentials.serverBaseURL}/searchSetlists`,
@@ -187,6 +194,8 @@ export const artistSearch = artistName => (
         dispatch(initialSearchRun());
 
       }
+
+      dispatch(setSearchState(false));
 
     }).catch((error) => {
 

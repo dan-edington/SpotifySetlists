@@ -27,6 +27,7 @@ const initialState = {
   setLists: [],
   spotifyURIs: {},
   initialSearchRun: false,
+  isSearching: false,
 };
 
 let newSpotifyURIs;
@@ -36,6 +37,14 @@ const appState = (state = initialState, action) => {
   let returnState;
 
   switch (action.type) {
+
+    case 'SET_SEARCH_STATE':
+      returnState = {
+        ...state,
+        setLists: action.payload ? [] : state.setLists,
+        isSearching: action.payload,
+      }
+      break;
 
     case 'RESET_SEARCH_DATA':
       returnState = state;
